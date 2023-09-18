@@ -45,7 +45,10 @@ $ docker-compose up --build
 
 ## Testing The App
 
-TBD
+To run tests, type inside of web container:
+```bash
+pytest
+```
 
 ## Design Patterns
 
