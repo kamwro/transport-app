@@ -45,6 +45,8 @@ $ docker-compose up --build
 
 ## Testing The App
 
+Unit tests conducted using [pytest](https://docs.pytest.org/en/7.4.x/), FastAPI [TestClient](https://fastapi.tiangolo.com/tutorial/testing/) and [SQLite](https://www.sqlite.org/index.html) in-memory database.
+
 To run tests, type inside of web container:
 ```bash
 $ pytest

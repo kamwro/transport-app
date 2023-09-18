@@ -111,14 +111,14 @@ async def get_all_rides_by_starting_city(start_city: str, current_user: Annotate
     return crud.get_rides_by_start_city(db=db, start_city=start_city)
 
 @router.get("/all/{destination_city}", response_model=list[schemas.Ride], summary = "Show available rides to specific city", tags = [Tags.rides])
-async def get_all_rides_by_starting_city(destination_city: str, current_user: Annotated[schemas.User, Depends(get_current_active_user)],
+async def get_all_rides_by_destination_city(destination_city: str, current_user: Annotated[schemas.User, Depends(get_current_active_user)],
                         db: Session = Depends(get_db)) -> list[schemas.Ride]:
     """Gets list of all active rides to **destination_city** (str).
     """
     return crud.get_rides_by_destination_city(db=db, destination_city=destination_city)
 
 @router.get("/{start_city}/{destination_city}", response_model=list[schemas.Ride], summary = "Show all available rides from one city to another", tags = [Tags.rides])
-async def get_all_rides_by_starting_city(start_city: str, destination_city: str, current_user: Annotated[schemas.User, Depends(get_current_active_user)],
+async def get_all_rides_from_one_city_to_another(start_city: str, destination_city: str, current_user: Annotated[schemas.User, Depends(get_current_active_user)],
                         db: Session = Depends(get_db)) -> list[schemas.Ride]:
     """Gets list of all active rides from **start_city** (str) to **destination_city** (str).
     """
