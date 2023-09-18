@@ -47,7 +47,7 @@ $ docker-compose up --build
 
 To run tests, type inside of web container:
 ```bash
-pytest
+$ pytest
 ```
 
 ## Design Patterns
