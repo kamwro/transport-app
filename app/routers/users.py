@@ -66,9 +66,9 @@ def authenticate_user(username: str, password: str, db: Session = Depends(get_db
 
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)) -> schemas.User:
-    """Creates a user dependency based on a token and database session dependency.
+    """Creates an user dependency based on a token and database session dependency.
     Uses JWT (JSON Web Token) to decode a token and get an username (subject), then uses it
-    to get a user schemas.User object
+    to get an user schemas.User object
 
     Args:
         token (Annotated[str, Depends): depended on oauth2 scheme
@@ -211,7 +211,7 @@ async def read_my_info(
     current_user: Annotated[schemas.User, Depends(get_current_active_user)]
 ) -> schemas.User:
     """
-    Returns a User object with your account information listed.
+    Returns an User object with your account information listed.
     Won't show your hashed password or activation code.
     """
     return current_user
@@ -257,7 +257,7 @@ async def send_activation_code(current_user: Annotated[schemas.User, Depends(get
     return JSONResponse(status_code=200, content={"message": f"activation code has been sent to {current_user.login}"})
 
 
-@router.get("/{user_id}/activate/{activation_code}", summary = "Activate a user",
+@router.get("/{user_id}/activate/{activation_code}", summary = "Activate an user",
            response_description = "Successfully activated an account.", tags = [Tags.my_acc])
 async def activate_my_account(user_id: int, activation_code: str,
 db: Session = Depends(get_db)) -> JSONResponse:
@@ -291,7 +291,7 @@ db: Session = Depends(get_db)) -> JSONResponse:
     return JSONResponse(status_code = 200, content={"message": "your account has been activated."})
 
 
-@router.delete("/me/delete", response_model=schemas.User,
+@router.delete("/me/delete", response_model=schemas.User, summary = "Activate an user",
                response_description = "Successfully deleted an account.", tags = [Tags.my_acc])
 async def delete_my_account(current_user: Annotated[schemas.User, Depends(get_current_user)],
 db: Session = Depends(get_db)) -> JSONResponse:
@@ -428,7 +428,7 @@ async def activate_user(username: str, current_user: Annotated[schemas.User, Dep
 
 
 @router.patch("/{username}/deactivate", response_model = schemas.User, summary = "Deactivate an user",
-              response_description = "Successfully deactivated a user.", tags = [Tags.adm_actions_users])
+              response_description = "Successfully deactivated an user.", tags = [Tags.adm_actions_users])
 async def deactivate_user(username: str, current_user: Annotated[schemas.User, Depends(get_current_active_admin)],
                       db: Session = Depends(get_db)) -> schemas.User:
     """
@@ -452,7 +452,7 @@ async def deactivate_user(username: str, current_user: Annotated[schemas.User, D
         )
 
 
-@router.delete("/{username}/delete", summary = "Delete a user",
+@router.delete("/{username}/delete", summary = "Delete an user",
                response_description = "Successfully deleted an user.", tags = [Tags.adm_actions_users])
 async def delete_user(username: str, current_user: Annotated[schemas.User, Depends(get_current_active_admin),],
                       db: Session = Depends(get_db)) -> JSONResponse:

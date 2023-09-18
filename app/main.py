@@ -59,7 +59,7 @@ app.add_middleware(
 )
 
 
-@app.get("/")
+@app.get("/", summary = "Welcome to the app", tags = ["Hello World"])
 async def welcome_to_the_app() -> JSONResponse:
     """Returns JSONResponse
     """

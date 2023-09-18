@@ -139,7 +139,7 @@ async def create_ride(ride: schemas.RideCreate, current_user: Annotated[schemas.
     """
     return crud.create_ride(db=db, new_ride=ride)
 
-@router.patch("/{ride_id}/archivise", response_model=schemas.Ride, summary = "Archivise a ride.", tags = [Tags.adm_actions_rides])
+@router.patch("/{ride_id}/archivise", response_model=schemas.Ride, summary = "Archivise a ride", tags = [Tags.adm_actions_rides])
 async def archivise_ride(ride_id: int, current_user: Annotated[schemas.User, Depends(get_current_active_admin)],
                       db: Session = Depends(get_db)) -> schemas.Ride:
     """Archivises a ride providing **ride_id** (int)
@@ -161,7 +161,7 @@ async def archivise_ride(ride_id: int, current_user: Annotated[schemas.User, Dep
         detail=f"couldn't find a ride with id = {ride_id}"
         )
 
-@router.delete("/{ride_id}/delete", response_model=schemas.Ride, summary = "Delete a ride.", tags = [Tags.adm_actions_rides])
+@router.delete("/{ride_id}/delete", response_model=schemas.Ride, summary = "Delete a ride", tags = [Tags.adm_actions_rides])
 async def delete_ride(ride_id: int, current_user: Annotated[schemas.User, Depends(get_current_active_admin)],
                       db: Session = Depends(get_db)) -> JSONResponse:
     """Permanently deletes a ride providing **ride_id** (int)

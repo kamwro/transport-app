@@ -71,7 +71,7 @@ def remove_user(db: Session, user_login: str):
 
 
 def activate_user(db: Session, user_login: str) -> schemas.User:
-    """Activates a user providing user login
+    """Activates an user providing user login
 
     Args:
         db (Session): database session
@@ -90,7 +90,7 @@ def activate_user(db: Session, user_login: str) -> schemas.User:
 
         
 def deactivate_user(db: Session, user_login: str) -> schemas.User:
-    """Deactivates a user providing user login
+    """Deactivates an user providing user login
 
     Args:
         db (Session): database session
