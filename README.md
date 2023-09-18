@@ -1,6 +1,6 @@
 # Transport Management App Example
 
-Build with [FastAPI](https://fastapi.tiangolo.com/) and [PostgreSQL](https://www.postgresql.org/) app that let's you manage the rides that people can book to travel.
+Build with [FastAPI](https://fastapi.tiangolo.com/) and [PostgreSQL](https://www.postgresql.org/) app that lets you manage rides that people can book to travel.
 
 ## Prerequisites
 
@@ -8,7 +8,7 @@ Build with [FastAPI](https://fastapi.tiangolo.com/) and [PostgreSQL](https://www
 - [Docker](https://www.docker.com/) with [Docker Compose](https://docs.docker.com/compose/),
 - Have set up an email address that will enable you sending emails through SMTP server.
 
-## Setting Up Environmetal Variables
+## Setting Up Environmental Variables
 
 Before you dive in, you need to set up project environmental variables.
 - Open the project directory,
