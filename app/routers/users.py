@@ -1,4 +1,5 @@
 import os
+import re
 from dotenv import load_dotenv
 from starlette.responses import JSONResponse
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -46,7 +47,7 @@ router = APIRouter(
 )
 
 
-def authenticate_user(username: str, password: str, db: Session = Depends(get_db)) -> schemas.User:
+def authenticate_user(username: str, password: str, db: Session = Depends(get_db)) -> schemas.User | bool:
     """Checks if user exists and have verified password, then returns the user schema
 
     Args:
@@ -55,7 +56,7 @@ def authenticate_user(username: str, password: str, db: Session = Depends(get_db
         db (Session, optional): database session dependency. Defaults to Depends(get_db).
 
     Returns:
-        schemas.User
+        schemas.User | False (couldn't find the user)
     """
     user = crud.get_user_by_login(db, username)
     if user == None:
@@ -162,10 +163,19 @@ async def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)) -
     In order to activate your account, paste the link into the browser with app working - will redirect
     you to the /users/me/{user_id}/activate/{activation_code} endpoint.
 
+    If email address is not valid, the method will raise a HTTPException. That doesn't apply to admin users.
+
     **Users with the admin status are active by default and thus do not have to activate their account.**
 
     Returns JSONResponse with user data and confirmation about sending an activation email.
     """
+    email_regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+    user_login_invalid = not re.fullmatch(email_regex, user.login)
+    if user_login_invalid and user.is_admin == False:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED, 
+            detail="Login is not a valid email address."
+        )
     db_user = crud.get_user_by_login(db=db, user_login=user.login)
     if db_user:
         raise HTTPException(
