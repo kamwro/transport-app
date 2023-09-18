@@ -1,4 +1,3 @@
-import os
 from datetime import timedelta
 from typing import Annotated
 from starlette.responses import JSONResponse
@@ -10,18 +9,8 @@ from . import models, schemas, crud
 from .utils import Tags, description
 from .database import engine
 from .dependencies import get_db
-from .utils import SecurityUtils
-from .routers import users, rides
-from dotenv import load_dotenv
-
-
-load_dotenv("./.env")
-
-
-class Envs:
-    """Environmental variables
-    """
-    ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
+from .utils import SecurityUtils, Envs
+from .routers import users, rides, users_adm, rides_adm
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -40,6 +29,8 @@ app = FastAPI(
 
 app.include_router(users.router)
 app.include_router(rides.router)
+app.include_router(users_adm.router)
+app.include_router(rides_adm.router)
 
 
 origins = [

@@ -10,10 +10,15 @@ load_dotenv("./.env")
 
 
 class Envs:
-    """Environmental variables
-    """    
-    SECRET_KEY = os.getenv("SECRET_KEY")
-    ALGORITHM = os.getenv("ALGORITHM")
+   """Environmental variables
+   """ 
+   MAIL_USERNAME=os.getenv('MAIL_USERNAME')
+   MAIL_PASSWORD=os.getenv('MAIL_PASSWORD')
+   MAIL_FROM = os.getenv('MAIL_FROM')
+   MAIL_PORT=os.getenv('MAIL_PORT')
+   MAIL_SERVER=os.getenv('MAIL_SERVER')
+   SECRET_KEY=os.getenv('SECRET_KEY')
+   ALGORITHM=os.getenv('ALGORITHM')
 
 
 class SecurityUtils():
