@@ -6,7 +6,7 @@ from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from . import models, schemas
+from . import models, schemas, crud
 from .utils import Tags, description
 from .database import engine
 from .dependencies import get_db
@@ -58,6 +58,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def authenticate_user(username: str, password: str, db: Session = Depends(get_db)) -> schemas.User | bool:
+    """Checks if user exists and have verified password, then returns the user schema
+
+    Args:
+        username (str): login (email)
+        password (str): password
+        db (Session, optional): database session dependency. Defaults to Depends(get_db).
+
+    Returns:
+        schemas.User | False (couldn't find the user)
+    """
+    user = crud.get_user_by_login(db, username)
+    if user == None:
+        return False
+    if not SecurityUtils.verify_password(password, user.hashed_password):
+        return False
+    return user
+
 
 @app.get("/", summary = "Welcome to the app", tags = ["Hello World"])
 async def welcome_to_the_app() -> JSONResponse:
@@ -76,7 +94,7 @@ async def login_for_access_token(
 
     Returns access token.
     """
-    user = users.authenticate_user(form_data.username, form_data.password, db)
+    user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

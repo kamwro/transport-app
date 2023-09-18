@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from typing import Annotated
 from sqlalchemy.orm import Session
-from ..utils import Tags, SecurityUtils
+from ..utils import Tags
 from ..dependencies import get_db, get_current_user, get_current_active_user, get_current_active_admin
 from .. import crud, schemas
 
@@ -45,24 +45,6 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-
-def authenticate_user(username: str, password: str, db: Session = Depends(get_db)) -> schemas.User | bool:
-    """Checks if user exists and have verified password, then returns the user schema
-
-    Args:
-        username (str): login (email)
-        password (str): password
-        db (Session, optional): database session dependency. Defaults to Depends(get_db).
-
-    Returns:
-        schemas.User | False (couldn't find the user)
-    """
-    user = crud.get_user_by_login(db, username)
-    if user == None:
-        return False
-    if not SecurityUtils.verify_password(password, user.hashed_password):
-        return False
-    return user
 
 @router.post("/", response_model=schemas.User, summary= "Create an user account",
           response_description = "Succesfully created an user account.",
