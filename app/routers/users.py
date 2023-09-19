@@ -79,7 +79,7 @@ async def read_my_info(
     return current_user
 
 
-@router.post("/me/send-activation-code", summary = "Resend activation code",
+@router.get("/me/send-activation-code", summary = "Resend activation code",
            response_description = "Successfully send activation email.", tags = [Tags.my_acc])
 async def send_activation_code(current_user: Annotated[schemas.User, Depends(get_current_user)]) -> JSONResponse:
     """
@@ -103,7 +103,7 @@ async def send_activation_code(current_user: Annotated[schemas.User, Depends(get
 async def activate_my_account(user_id: int, activation_code: str,
 db: Session = Depends(get_db)) -> JSONResponse:
     """
-    This endpoint was created to serve as an account verification link, that's why its GET, not POST.
+    This endpoint was created to serve as an account verification link, that's why its GET, not PATCH/PUT.
 
     You can also activate your account by providing some information: 
 
@@ -143,7 +143,11 @@ db: Session = Depends(get_db)) -> JSONResponse:
 
     Returns JSONResponse with the success confirmation message.
     """
-    username = current_user.login
-    await EmailUtils.send_self_deletion_email(user=current_user)
-    crud.remove_user(db=db, user_login=current_user.login)
-    return JSONResponse(status_code=200, content={"message": f"Your account has been deleted. An email has been sent to the {username}."})
+    if current_user.is_admin:
+        crud.remove_user(db=db, user_login=current_user.login)
+        return JSONResponse(status_code=200, content={"message": "Your account has been deleted."})
+    else:
+        username = current_user.login
+        await EmailUtils.send_self_deletion_email(user=current_user)
+        crud.remove_user(db=db, user_login=current_user.login)
+        return JSONResponse(status_code=200, content={"message": f"Your account has been deleted. An email has been sent to the {username}."})

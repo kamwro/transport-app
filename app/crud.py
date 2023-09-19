@@ -125,7 +125,7 @@ def grant_admin_status(db: Session, user_login: str) -> schemas.User:
     return user
 
 
-def remove_admin_status(db: "Session", user_login: str) -> schemas.User:
+def remove_admin_status(db: Session, user_login: str) -> schemas.User:
     """Takes the admin status from an user providing user login
 
     Args:

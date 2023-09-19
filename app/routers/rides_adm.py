@@ -59,7 +59,7 @@ async def delete_ride(ride_id: int, current_user: Annotated[schemas.User, Depend
     ride = crud.get_ride_by_ID(db=db, ride_id=ride_id)
     if ride is not None:
         crud.remove_ride(db=db, ride_id=ride_id)
-        return JSONResponse(status_code = 200, content={"message: ": f"ride with id = {ride_id} successfully deleted."})
+        return JSONResponse(status_code = 200, content={"message": f"ride with id = {ride_id} successfully deleted."})
     else:
         raise HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
