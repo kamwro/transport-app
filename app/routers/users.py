@@ -4,22 +4,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from typing import Annotated
 from sqlalchemy.orm import Session
-from ..utils import Tags, Envs
+from ..utils import Tags, EmailUtils
 from ..dependencies import get_db, get_current_user, get_current_active_user
 from .. import crud, schemas
-
-
-conf = ConnectionConfig(
-   MAIL_USERNAME=Envs.MAIL_USERNAME,
-   MAIL_PASSWORD=Envs.MAIL_PASSWORD,
-   MAIL_FROM=Envs.MAIL_FROM,
-   MAIL_PORT=Envs.MAIL_PORT,
-   MAIL_SERVER=Envs.MAIL_SERVER,
-   MAIL_STARTTLS=True,
-   MAIL_SSL_TLS=False,
-   USE_CREDENTIALS = True,
-   VALIDATE_CERTS = True
-)
 
 
 router = APIRouter(
@@ -53,8 +40,9 @@ async def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)) -
 
     Returns JSONResponse with user data and confirmation about sending an activation email.
     """
-    email_regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
-    user_login_invalid = not re.fullmatch(email_regex, user.login)
+
+    user_login_invalid = not EmailUtils.is_email_valid(username=user.login)
+
     if user_login_invalid and user.is_admin == False:
         raise HTTPException(
             status_code=status.HTTP_405_METHOD_NOT_ALLOWED, 
@@ -73,27 +61,7 @@ async def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)) -
     user_data = {info:user_data[info] for info in user_data if info!='hashed_password'}
     
     if new_user.is_admin == False:
-        template = """
-            <html>
-            <body>
-            
-    <p>Hi """+new_user.first_name+""",
-            <br>your activation link: http://localhost:8008/users/"""+str(new_user.id)+"""/activate/"""+new_user.activation_code +""" </p>
-    
-    
-            </body>
-            </html>
-            """
-        email = schemas.EmailSchema(email=[new_user.login])
-        message = MessageSchema(
-            subject="Activate your account",
-            recipients=email.model_dump().get("email"),
-            body=template,
-            subtype=MessageType.html
-            )
-    
-        fm = FastMail(conf)
-        await fm.send_message(message)
+        await EmailUtils.send_activation_link(user=new_user)
         return JSONResponse(status_code=200, content={"user data: ": [user_data], "message": f"activation code has been sent to {new_user.login}"})
     else:
         return JSONResponse(status_code=200, content={"user data: ": [user_data], "message": "user is a superuser. Automatic account activation."})
@@ -126,28 +94,7 @@ async def send_activation_code(current_user: Annotated[schemas.User, Depends(get
             detail="User already active",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    template = """
-        <html>
-        <body>
-         
- 
-<p>Hi """+current_user.first_name+""",
-        <br>your activation link: http://localhost:8008/users/"""+str(current_user.id)+"""/activate/"""+current_user.activation_code +""" </p>
- 
- 
-        </body>
-        </html>
-        """
-    email = schemas.EmailSchema(email=[current_user.login])
-    message = MessageSchema(
-        subject="Activate your account",
-        recipients=email.model_dump().get("email"),
-        body=template,
-        subtype=MessageType.html
-        )
- 
-    fm = FastMail(conf)
-    await fm.send_message(message)
+    await EmailUtils.send_activation_link(user=current_user)
     return JSONResponse(status_code=200, content={"message": f"activation code has been sent to {current_user.login}"})
 
 
@@ -185,7 +132,7 @@ db: Session = Depends(get_db)) -> JSONResponse:
     return JSONResponse(status_code = 200, content={"message": "your account has been activated."})
 
 
-@router.delete("/me/delete", response_model=schemas.User, summary = "Activate an user",
+@router.delete("/me/delete", response_model=schemas.User, summary = "Delete an user",
                response_description = "Successfully deleted an account.", tags = [Tags.my_acc])
 async def delete_my_account(current_user: Annotated[schemas.User, Depends(get_current_user)],
 db: Session = Depends(get_db)) -> JSONResponse:
@@ -197,28 +144,6 @@ db: Session = Depends(get_db)) -> JSONResponse:
     Returns JSONResponse with the success confirmation message.
     """
     username = current_user.login
-    template = """
-        <html>
-        <body>
-         
- 
-<p>Hi """+current_user.first_name+""",
-        <br>Your account has been successfully deleted.
-        <br>We're sorry to hear it. Come back anytime. </p>
- 
-
-        </body>
-        </html>
-        """
+    await EmailUtils.send_self_deletion_email(user=current_user)
     crud.remove_user(db=db, user_login=current_user.login)
-    email = schemas.EmailSchema(email=[username])
-    message = MessageSchema(
-        subject="Your account has been deleted",
-        recipients=email.model_dump().get("email"),
-        body=template,
-        subtype=MessageType.html
-        )
-    
-    fm = FastMail(conf)
-    await fm.send_message(message)
     return JSONResponse(status_code=200, content={"message": f"Your account has been deleted. An email has been sent to the {username}."})

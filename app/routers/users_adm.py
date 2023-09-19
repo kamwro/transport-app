@@ -1,24 +1,10 @@
 from starlette.responses import JSONResponse
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from typing import Annotated
 from sqlalchemy.orm import Session
-from ..utils import Tags, Envs
+from ..utils import Tags, EmailUtils
 from ..dependencies import get_db, get_current_active_admin
 from .. import crud, schemas
-
-
-conf = ConnectionConfig(
-   MAIL_USERNAME=Envs.MAIL_USERNAME,
-   MAIL_PASSWORD=Envs.MAIL_PASSWORD,
-   MAIL_FROM=Envs.MAIL_FROM,
-   MAIL_PORT=Envs.MAIL_PORT,
-   MAIL_SERVER=Envs.MAIL_SERVER,
-   MAIL_STARTTLS=True,
-   MAIL_SSL_TLS=False,
-   USE_CREDENTIALS = True,
-   VALIDATE_CERTS = True
-)
 
 
 router = APIRouter(
@@ -162,30 +148,8 @@ async def delete_user(username: str, current_user: Annotated[schemas.User, Depen
     """
     user = crud.get_user_by_login(db=db, user_login=username)
     if user is not None:
-        template = """
-            <html>
-            <body>
-            
-
-    <p>Hi """+crud.get_user_by_login(db=db, user_login=username).first_name+""",
-            <br>We're sorry to hear it, but your account has been deleted.
-            <br>Hope to get you in touch in the future.</p>
-    
-    
-            </body>
-            </html>
-            """
+        await EmailUtils.send_deletion_email(user=user)
         crud.remove_user(db=db, user_login=username)
-        email = schemas.EmailSchema(email=[username])
-        message = MessageSchema(
-            subject="Your account has been deleted",
-            recipients=email.model_dump().get("email"),
-            body=template,
-            subtype=MessageType.html
-            )
-    
-        fm = FastMail(conf)
-        await fm.send_message(message)
         return JSONResponse(status_code = 200, content={"message": f"user has been deleted. An email has been sent to the {username}."})
     else:
         raise HTTPException(
