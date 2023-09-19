@@ -39,9 +39,10 @@ $ docker-compose up --build
 
 ## Documentation
 
-- [Swagger docs](http://localhost:8008/docs)
-- [Redocly docs](http://localhost:8008/redoc)
-- Whole project is well documented via pythonic docstrings. You can access docs through [pydoc](https://docs.python.org/3/library/pydoc.html)
+- [Swagger docs](http://localhost:8008/docs),
+- [Redocly docs](http://localhost:8008/redoc),
+- Access [pdoc](https://pdoc.dev/) documentation in the ./docs folder,
+- Whole project is well documented via pythonic docstrings. You can also access docs through [pydoc](https://docs.python.org/3/library/pydoc.html).
 
 ## Testing The App
 

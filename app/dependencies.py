@@ -5,7 +5,7 @@ from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer
-from .database import SessionLocal
+from .database import SessionLocal, TestingSessionLocal
 from . import crud, schemas
 
 load_dotenv("./.env")
@@ -25,6 +25,18 @@ def get_db():
     """
     db = SessionLocal()
     try:
+        yield db
+    finally:
+        db.close()
+
+def override_get_db():
+    """Tries to yield in-memory database session maker and closes it in any case
+
+    Yields:
+        Iterator[SessionLocal]
+    """
+    try:
+        db = TestingSessionLocal()
         yield db
     finally:
         db.close()

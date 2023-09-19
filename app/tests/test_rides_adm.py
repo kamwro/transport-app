@@ -16,13 +16,25 @@ app.dependency_overrides[dependencies.get_db] = dependencies.override_get_db
 client = TestClient(app)
 
 
-# def test_welcome_to_the_app():
+# def test_create_ride():
 #     pass
 
 
-# def test_login_for_access_token():
+# def test_archivise_ride():
 #     pass
 
 
-# def test_login_for_access_token_bad_credentials():
+# def test_archivise_ride_no_ride():
+#     pass
+
+
+# def test_archivise_ride_ride_already_inactive():
+#     pass
+
+
+# def test_delete_ride():
+#     pass
+
+
+# def test_delete_ride_no_ride():
 #     pass
