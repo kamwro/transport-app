@@ -30,7 +30,7 @@ MAIL_FROM = <email> # an email address
 MAIL_PORT = 587 # should be fine - check your email SMTP server
 MAIL_SERVER = <server> # SMTP server, for example outlook emails might have: smtp.office365.com
 
-# this will be used for tests and must be valid email addresses
+# this will be used for tests and must be a valid email addresses
 TEST_MAIL = <mail>
 
 # token and authentication stuff
@@ -53,8 +53,8 @@ $ docker-compose up --build
 
 - [Swagger docs](http://localhost:8008/docs),
 - [Redocly docs](http://localhost:8008/redoc),
-- Access [pdoc](https://pdoc.dev/) documentation in the ./docs folder,
-- Whole project is well documented via pythonic docstrings. You can also access docs through [pydoc](https://docs.python.org/3/library/pydoc.html).
+- access [pdoc](https://pdoc.dev/) documentation in the ./docs folder,
+- whole project is well documented via pythonic docstrings. You can also access docs through [pydoc](https://docs.python.org/3/library/pydoc.html).
 
 ## Testing The App
 
