@@ -12,7 +12,7 @@ Build with [FastAPI](https://fastapi.tiangolo.com/) and [PostgreSQL](https://www
 ## Cloning The Repository
 
 ```bash
-git clone https://github.com/kamwro/transport-app
+$ git clone https://github.com/kamwro/transport-app
 ```
 
 ## Setting Up Environmental Variables
