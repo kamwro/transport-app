@@ -19,10 +19,10 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI(    
     title = "Transport Management App",
     description = description,
-    version = "pre-alpha",
+    version = "alpha",
     contact = {
         "name": "Kamil Wróbel",
-        "url": "https://github.com/kamwro",
+        "url": "https://github.com/kamwro/transport-app",
     }
 )
 

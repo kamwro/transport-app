@@ -3,18 +3,22 @@ from fastapi import HTTPException
 from fastapi.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
 from fastapi.security import OAuth2PasswordRequestForm
-from ..main import app
-from .. import schemas, dependencies
-from ..database import Base, engine_tests
-from ..utils import Envs
+from app.main import app
+from app import schemas, dependencies
+from app.database import Base, engine_tests
+from app.utils import Envs
 
 
 Base.metadata.create_all(bind=engine_tests)
 
+user1 = schemas.CreateUser(login=Envs.TEST_MAIL, first_name="John",
+                        last_name="Tester", address="Cyberworld",
+                        is_admin=False, hashed_password="admin123")
+
 class override_OAuth2PasswordRequestForm(OAuth2PasswordRequestForm):
-    username = Envs.TEST_MAIL_1
-    password = "admin123"
-    
+    username = user1.login
+    password = user1.hashed_password
+
 
 app.dependency_overrides[dependencies.get_db] = dependencies.override_get_db
 app.dependency_overrides[OAuth2PasswordRequestForm] = override_OAuth2PasswordRequestForm
@@ -28,13 +32,13 @@ client = TestClient(app)
 
 
 def test_create_user():
-    user = schemas.CreateUser(login=Envs.TEST_MAIL_1, first_name="John",
+    user = schemas.CreateUser(login=Envs.TEST_MAIL, first_name="John",
                         last_name="Tester", address="Cyberworld",
                         is_admin=False, hashed_password="admin123")
     user = jsonable_encoder(user)
     response = client.post("/users/", json = user)
     assert response.status_code == 200, response.text
-    assert response.json()['message'] == f"activation code has been sent to {user['login']}"
+    assert response.json()['message'] == f"activation link has been sent to {user['login']}"
 
 
 def test_create_user_admin():
@@ -48,7 +52,7 @@ def test_create_user_admin():
 
 
 def test_create_user_email_already_registered():
-    user = schemas.CreateUser(login=Envs.TEST_MAIL_1, first_name="Fake John",
+    user = schemas.CreateUser(login=Envs.TEST_MAIL, first_name="Fake John",
                         last_name="Tester", address="Yesterdays",
                         is_admin=False, hashed_password="admin123")
     user = jsonable_encoder(user)

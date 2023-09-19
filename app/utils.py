@@ -21,8 +21,7 @@ class Envs:
    MAIL_PORT=os.getenv('MAIL_PORT')
    MAIL_SERVER=os.getenv('MAIL_SERVER')
 
-   TEST_MAIL_1=os.getenv('TEST_MAIL_1')
-   TEST_MAIL_2=os.getenv('TEST_MAIL_2')
+   TEST_MAIL=os.getenv('TEST_MAIL')
 
    SECRET_KEY=os.getenv('SECRET_KEY')
    ALGORITHM=os.getenv('ALGORITHM')
@@ -220,5 +219,15 @@ class Tags(Enum):
 
 
 description = """
-## markdown
+
+### Build with FastAPI and PostgreSQL backend app that lets you manage rides that people can book to travel.
+
+### Docs 
+
+- alternative docs available at [localhost:8008/redoc](localhost:8008/redoc),
+- pdoc docs available at ./docs in the root project folder.
+
+### More info
+
+Check out README file at:
 """

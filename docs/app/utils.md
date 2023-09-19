@@ -70,6 +70,9 @@ Classes
     `SECRET_KEY`
     :
 
+    `TEST_MAIL`
+    :
+
 `SecurityUtils()`
 :   Security utils static functions and pwd_context for cryptograhics
 

@@ -2,9 +2,9 @@ import pytest
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
-from ..main import app
-from .. import schemas, dependencies
-from ..database import Base, engine_tests
+from app.main import app
+from app import schemas, dependencies
+from app.database import Base, engine_tests
 
 
 Base.metadata.create_all(bind=engine_tests)

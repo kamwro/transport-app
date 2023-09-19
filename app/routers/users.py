@@ -62,7 +62,7 @@ async def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)) -
     
     if new_user.is_admin == False:
         await EmailUtils.send_activation_link(user=new_user)
-        return JSONResponse(status_code=200, content={"user data: ": [user_data], "message": f"activation code has been sent to {new_user.login}"})
+        return JSONResponse(status_code=200, content={"user data: ": [user_data], "message": f"activation link has been sent to {new_user.login}"})
     else:
         return JSONResponse(status_code=200, content={"user data: ": [user_data], "message": "user is a superuser. Automatic account activation."})
 

@@ -1,19 +1,26 @@
 # Transport Management App Example
 
-Build with [FastAPI](https://fastapi.tiangolo.com/) and [PostgreSQL](https://www.postgresql.org/) app that lets you manage rides that people can book to travel.
+Build with [FastAPI](https://fastapi.tiangolo.com/) and [PostgreSQL](https://www.postgresql.org/) backend app that lets you manage rides that people can book to travel.
 
 ## Prerequisites
 
 - [Python 3](https://www.python.org/), v. 10+ or latest (recommended),
 - [Docker](https://www.docker.com/) with [Docker Compose](https://docs.docker.com/compose/),
-- Have set up an email address that will enable you sending emails through SMTP server.
+- have set up an email address that will enable you sending emails through SMTP server,
+- have prepared different email address to do tests, if you wish.
+
+## Cloning The Repository
+
+```bash
+git clone https://github.com/kamwro/transport-app
+```
 
 ## Setting Up Environmental Variables
 
 Before you dive in, you need to set up project environmental variables.
-- Open the project directory,
-- Create an ***.env*** file in the root directory (/transport-app/),
-- Paste below content with your custom envs:
+1. Open the project directory
+2. Create an ***.env*** file in the root directory (/transport-app/)
+3. Paste below content with your custom envs:
 
 ```python
 # email sending messages
@@ -23,15 +30,13 @@ MAIL_FROM = <email> # an email address
 MAIL_PORT = 587 # should be fine - check your email SMTP server
 MAIL_SERVER = <server> # SMTP server, for example outlook emails might have: smtp.office365.com
 
-# these will be used for tests and must be valid email addresses
-# both addresses must be different from each other or the tests wil fail
-TEST_MAIL_1 = <mail>
-TEST_MAIL_2 = <mail>
+# this will be used for tests and must be valid email addresses
+TEST_MAIL = <mail>
 
 # token and authentication stuff
-SECRET_KEY = <secret> - # run $ openssl rand -hex 32 in a terminal and paste the result
-ALGORITHM = <algorithm> - # will be needed to hash users passwords. I used HS256 for development
-ACCESS_TOKEN_EXPIRE_MINUTES = 30 - # minutes after the access token will be expired. Can leave as it is
+SECRET_KEY = <secret> # run $ openssl rand -hex 32 in a terminal and paste the result
+ALGORITHM = <algorithm> # will be needed to hash users passwords. I used HS256 for development
+ACCESS_TOKEN_EXPIRE_MINUTES = 30 # minutes after the access token will be expired. Can leave as it is
 ```
 
 ## Running The App
@@ -64,11 +69,11 @@ $ pytest
 
 Building my app, I've been trying to achieve clean code principles, such as:
 
-- Hide the instantiation process from the user,
-- Simple is better than complex and complex is better than complicated,
-- Readability is crucial,
+- hide the instantiation process from the user,
+- simple is better than complex and complex is better than complicated,
+- readability is crucial,
 - Do not Repeat Yourself (as possible),
-- Stay true to the Single Responsibility principle.
+- stay true to the Single Responsibility principle.
 
 Some of the design patterns used in my project:
 
