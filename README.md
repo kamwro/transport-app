@@ -52,6 +52,26 @@ To run tests, type inside of web container:
 $ pytest
 ```
 
-## Design Patterns
+## Design Patterns And Clean Code
 
-TBD
+Building my app, I've been trying to achieve clean code principles, such as:
+
+- Hide the instantiation process from the user,
+- Simple is better than complex and complex is better than complicated,
+- Readability is crucial,
+- Do not Repeat Yourself (as possible),
+- Stay true to the Single Responsibility principle.
+
+Some of the design patterns used in my project:
+
+- ***iterators*** - mostly dictionaries, JSON responses,
+- ***dependency injections*** - user authentication, admin priviliges, get_db etc.,
+- ***facade*** - given by FastAPI docs and by structuring project files.
+
+## Feedback
+
+More than welcome!
+
+## License 
+
+[MIT](https://github.com/kamwro/transport-app/blob/main/LICENSE)
