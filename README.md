@@ -16,12 +16,19 @@ Before you dive in, you need to set up project environmental variables.
 - Paste below content with your custom envs:
 
 ```python
+# email sending messages
 MAIL_USERNAME = <username> # can be an email address or a full name - check your email settings
 MAIL_PASSWORD = <password> # your email password
 MAIL_FROM = <email> # an email address
 MAIL_PORT = 587 # should be fine - check your email SMTP server
 MAIL_SERVER = <server> # SMTP server, for example outlook emails might have: smtp.office365.com
 
+# these will be used for tests and must be valid email addresses
+# both addresses must be different from each other or the tests wil fail
+TEST_MAIL_1 = <mail>
+TEST_MAIL_2 = <mail>
+
+# token and authentication stuff
 SECRET_KEY = <secret> - # run $ openssl rand -hex 32 in a terminal and paste the result
 ALGORITHM = <algorithm> - # will be needed to hash users passwords. I used HS256 for development
 ACCESS_TOKEN_EXPIRE_MINUTES = 30 - # minutes after the access token will be expired. Can leave as it is

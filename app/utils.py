@@ -17,9 +17,12 @@ class Envs:
    """ 
    MAIL_USERNAME=os.getenv('MAIL_USERNAME')
    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD')
-   MAIL_FROM = os.getenv('MAIL_FROM')
+   MAIL_FROM=os.getenv('MAIL_FROM')
    MAIL_PORT=os.getenv('MAIL_PORT')
    MAIL_SERVER=os.getenv('MAIL_SERVER')
+
+   TEST_MAIL_1=os.getenv('TEST_MAIL_1')
+   TEST_MAIL_2=os.getenv('TEST_MAIL_2')
 
    SECRET_KEY=os.getenv('SECRET_KEY')
    ALGORITHM=os.getenv('ALGORITHM')
