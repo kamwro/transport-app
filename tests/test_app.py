@@ -1,48 +1,12 @@
 import pytest
-from fastapi.testclient import TestClient
+import sqlite3
 from fastapi.encoders import jsonable_encoder
 from app.main import app
-from app import schemas, dependencies, crud
+from app import schemas, dependencies
 from app.database import Base, engine_tests
-from app.utils import Envs
 
 
 Base.metadata.create_all(bind=engine_tests)
-
-
-user1 = schemas.CreateUser(login=Envs.TEST_MAIL, first_name="John",
-                        last_name="Tester", address="Cyberworld",
-                        is_admin=False, hashed_password="admin123")
-
-user2 = schemas.CreateUser(login="fake_admin", first_name="Victor",
-                        last_name="Tester", address="Cyberworld",
-                        is_admin=True, hashed_password="admin123")
-
-ride1 = schemas.RideCreate(start_city = "city_1", destination_city = "city_2",
-                           distance = 1, km_fee= 1, departure_date="2020-01-01 19:30")
-
-
-ride2 = schemas.RideCreate(start_city = "city_2", destination_city = "city_1",
-                           distance = 1, km_fee= 1, departure_date="2020-01-01 19:30")
-
-
-# all tests except activate_my_account - needs to figure out how to write it
-
-
-@pytest.fixture(scope="module")
-def client():
-    with TestClient(app) as c:
-      yield c
-
-
-@pytest.fixture(scope="module")
-def test_user():
-    return {"username": user1.login, "password": user1.hashed_password}
-
-
-@pytest.fixture(scope="module")
-def test_admin():
-    return {"username": user2.login, "password": user2.hashed_password}
 
 
 app.dependency_overrides[dependencies.get_db] = dependencies.override_get_db
@@ -54,24 +18,32 @@ def test_welcome_to_the_app(client):
     assert response.json()['message'] == "Hello world! Go to the /docs."
 
 
-def test_create_user(client):
-    user = user1
+def test_create_user(client, test_user_schema):
+    user = test_user_schema["with_password"]
     user = jsonable_encoder(user)
     response = client.post("/users/", json = user)
     assert response.status_code == 200
     assert response.json()['message'] == f"activation link has been sent to {user['login']}"
 
 
-def test_create_user_admin(client):
-    user = user2
+def test_create_user_email_already_registered(client, test_user_schema):
+    user = test_user_schema["with_password"]
+    user = jsonable_encoder(user)
+    response = client.post("/users/", json = user)
+    assert response.status_code == 405
+    assert response.json() == {"detail": "Email already registered"}
+
+
+def test_create_user_admin(client, test_admin_schema):
+    user = test_admin_schema
     user = jsonable_encoder(user)
     response = client.post("/users/", json = user)
     assert response.status_code == 200
     assert response.json()['message'] == "user is a superuser. Automatic account activation."
 
 
-def test_create_user_email_already_registered(client):
-    user = user1
+def test_create_user_email_already_registered(client, test_user_schema):
+    user = test_user_schema["with_password"]
     user = jsonable_encoder(user)
     response = client.post("/users/", json = user)
     assert response.status_code == 405
@@ -142,7 +114,7 @@ def test_send_activation_code(client, test_user):
     token = test_login(client, test_user)
     response = client.get("/users/me/send-activation-code", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert response.json()['message'] == f"activation code has been sent to {user1.login}"
+    assert response.json()['message'] == f"activation code has been sent to {test_user['username']}"
 
 
 def test_send_activation_code_not_logged_in(client):
@@ -158,11 +130,11 @@ def test_activate_my_account_incorrect_code(client, test_user):
     assert response.json() == {"detail": "Incorrect activation code."}
 
 
-def test_activate_user(client, test_admin):
+def test_activate_user(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.patch(f"/users/{user1.login}/activate", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/activate", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert user1.login == response.json()['login']
+    assert test_user['username'] == response.json()['login']
 
 
 def test_send_activation_code_already_active(client, test_user):
@@ -176,19 +148,20 @@ def test_read_my_info(client, test_user):
     token = test_login(client, test_user)
     response = client.get("/users/me/", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert user1.login == response.json()['login']
+    assert test_user['username'] == response.json()['login']
+
 
 def test_view_user_info_not_an_admin(client, test_user):
     token = test_login(client, test_user)
-    response = client.get(f"/users/{user1.login}", headers={"Authorization": f"Bearer {token}"})
+    response = client.get(f"/users/{test_user['username']}", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
 
 
 def test_view_user_info(client, test_admin):
     token = test_login(client, test_admin)
-    response = client.get(f"/users/{user1.login}", headers={"Authorization": f"Bearer {token}"})
+    response = client.get(f"/users/{test_admin['username']}", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert user1.login == response.json()['login']
+    assert test_admin['username'] == response.json()['login']
 
 
 def test_view_user_info_no_user(client, test_admin):
@@ -200,7 +173,7 @@ def test_view_user_info_no_user(client, test_admin):
 
 def test_remove_adm_not_an_admin(client, test_user):
     token = test_login(client, test_user)
-    response = client.patch(f"/users/{user1.login}/remove-adm", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/remove-adm", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401 
 
 
@@ -211,9 +184,9 @@ def test_remove_adm_no_user(client, test_admin):
     assert response.json() == {"detail": "There's no user with email = totally-fake-login"}
 
 
-def test_remove_adm_user_not_an_admin(client, test_admin):
+def test_remove_adm_user_not_an_admin(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.patch(f"/users/{user1.login}/remove-adm", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/remove-adm", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 405 
     assert response.json() == {"detail": "User not an admin"}
 
@@ -227,29 +200,29 @@ def test_grant_adm_no_user(client, test_admin):
 
 def test_grant_adm_not_an_admin(client, test_user):
     token = test_login(client, test_user)
-    response = client.patch(f"/users/{user1.login}/grant-adm", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/grant-adm", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401 
 
 
-def test_grant_adm(client, test_admin):
+def test_grant_adm(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.patch(f"/users/{user1.login}/grant-adm", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/grant-adm", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert user1.login == response.json()['login']
+    assert test_user['username'] == response.json()['login']
     
 
-def test_grant_adm_user_already_an_admin(client, test_admin):
+def test_grant_adm_user_already_an_admin(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.patch(f"/users/{user1.login}/grant-adm", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/grant-adm", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 405 
     assert response.json() == {"detail": "User already an admin"}
 
 
-def test_remove_adm(client, test_admin):
+def test_remove_adm(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.patch(f"/users/{user1.login}/remove-adm", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/remove-adm", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200 
-    assert user1.login == response.json()['login']
+    assert test_user['username'] == response.json()['login']
 
 
 def test_get_all_rides_no_rides(client, test_user):
@@ -259,9 +232,9 @@ def test_get_all_rides_no_rides(client, test_user):
     assert response.json() == []
 
 
-def test_create_ride(client, test_admin):
+def test_create_ride(client, test_admin, test_ride_1_schema):
     token = test_login(client, test_admin)
-    ride = ride1
+    ride = test_ride_1_schema
     ride = jsonable_encoder(ride)
     response = client.post("/rides/", json = ride, headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
@@ -307,7 +280,7 @@ def test_reserve_ride(client, test_user):
     token = test_login(client, test_user)
     response = client.post("/rides/1/reserve", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert response.json()['message'] == f"The ride was booked successfully and a detailed email has been sent to {user1.login}"
+    assert response.json()['message'] == f"The ride was booked successfully and a detailed email has been sent to {test_user['username']}"
 
 
 def test_reserve_ride_inactive_ride(client, test_user):
@@ -317,9 +290,9 @@ def test_reserve_ride_inactive_ride(client, test_user):
     assert response.json() == {"detail":"The ride is no longer active."}
 
 
-def test_create_ride_2(client, test_admin):
+def test_create_ride_2(client, test_admin, test_ride_2_schema):
     token = test_login(client, test_admin)
-    ride = ride2
+    ride = test_ride_2_schema
     ride = jsonable_encoder(ride)
     response = client.post("/rides/", json = ride, headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
@@ -400,7 +373,7 @@ def test_delete_ride_not_an_adm(client, test_user):
 
 def test_deactivate_user_not_an_admin(client, test_user):
     token = test_login(client, test_user)
-    response = client.patch(f"/users/{user1.login}/deactivate", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/deactivate", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
 
 
@@ -411,30 +384,30 @@ def test_deactivate_user_no_user(client, test_admin):
     assert response.json() == {"detail": f"There's no user with email = totally-fake-login"}
 
 
-def test_deactivate_user(client, test_admin):
+def test_deactivate_user(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.patch(f"/users/{user1.login}/deactivate", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/deactivate", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert user1.login == response.json()['login']
+    assert test_user['username'] == response.json()['login']
 
 
-def test_deactivate_user_user_already_inactive(client, test_admin):
+def test_deactivate_user_user_already_inactive(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.patch(f"/users/{user1.login}/deactivate", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/deactivate", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 405
     assert response.json() == {"detail": "User already inactive"}
 
 
-def test_activate_user_again(client, test_admin):
+def test_activate_user_again(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.patch(f"/users/{user1.login}/activate", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/activate", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert user1.login == response.json()['login']
+    assert test_user['username'] == response.json()['login']
 
 
 def test_activate_user_not_an_admin(client, test_user):
     token = test_login(client, test_user)
-    response = client.patch(f"/users/{user1.login}/activate", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/activate", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
 
 
@@ -445,39 +418,39 @@ def test_activate_user_no_user(client, test_admin):
     assert response.json() == {"detail": "There's no user with email = totally-fake-login"}
 
 
-def test_activate_user_user_already_active(client, test_admin):
+def test_activate_user_user_already_active(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.patch(f"/users/{user1.login}/activate", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/activate", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 405
     assert response.json() == {"detail": "User already active"}
 
 
 def test_delete_user_not_an_admin(client, test_user):
     token = test_login(client, test_user)
-    response = client.patch(f"/users/{user1.login}/activate", headers={"Authorization": f"Bearer {token}"})
+    response = client.patch(f"/users/{test_user['username']}/activate", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
 
 
-def test_delete_user(client, test_admin):
+def test_delete_user(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.delete(f"/users/{user1.login}/delete", headers={"Authorization": f"Bearer {token}"})
+    response = client.delete(f"/users/{test_user['username']}/delete", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert response.json()['message'] == f"user has been deleted. An email has been sent to the {user1.login}."
+    assert response.json()['message'] == f"user has been deleted. An email has been sent to the {test_user['username']}."
 
 
-def test_delete_user_no_user(client, test_admin):
+def test_delete_user_no_user(client, test_admin, test_user):
     token = test_login(client, test_admin)
-    response = client.delete(f"/users/{user1.login}/delete", headers={"Authorization": f"Bearer {token}"})
+    response = client.delete(f"/users/{test_user['username']}/delete", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 405
-    assert response.json() == {"detail": f"There's no user with email = {user1.login}"}
+    assert response.json() == {"detail": f"There's no user with email = {test_user['username']}"}
 
 
-def test_delete_my_account(client, test_user):
-    test_create_user(client)
+def test_delete_my_account(client, test_user, test_user_schema):
+    test_create_user(client, test_user_schema)
     token = test_login(client, test_user)
     response = client.delete(f"/users/me/delete", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
-    assert response.json()['message'] == f"Your account has been deleted. An email has been sent to the {user1.login}."
+    assert response.json()['message'] == f"Your account has been deleted. An email has been sent to the {test_user['username']}."
 
 
 def test_delete_my_account_admin(client, test_admin):
