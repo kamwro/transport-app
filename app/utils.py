@@ -220,7 +220,7 @@ class Tags(Enum):
 
 description = """
 
-### Build with FastAPI and PostgreSQL backend app that lets you manage rides that people can book to travel.
+### Built with FastAPI and PostgreSQL backend app that lets you manage rides that people can book to travel.
 
 ### Docs 
 
