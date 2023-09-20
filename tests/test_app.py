@@ -12,6 +12,9 @@ Base.metadata.create_all(bind=engine_tests)
 app.dependency_overrides[dependencies.get_db] = dependencies.override_get_db
 
 
+# all tests except activate_my_account - needs to figure out how to write it
+
+
 def test_welcome_to_the_app(client):
     response = client.get("/")
     assert response.status_code == 200, response.text
