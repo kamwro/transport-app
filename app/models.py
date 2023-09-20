@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, Float, String, DateTime
 from .database import Base
 
+
 class User(Base):
     """Sqlalchemy model of User table based on the database sqlalchemic declarative_base()
     """    

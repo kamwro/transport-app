@@ -49,6 +49,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 def authenticate_user(username: str, password: str, db: Session = Depends(get_db)) -> schemas.User | bool:
     """Checks if user exists and have verified password, then returns the user schema
 
@@ -74,6 +75,7 @@ async def welcome_to_the_app() -> JSONResponse:
     """
     return JSONResponse(status_code=200, content={"message": "Hello world! Go to the /docs."})
 
+
 @app.post("/token", response_model=schemas.Token, summary = "Token login",
            tags = [Tags.acc_login])
 async def login_for_access_token(
@@ -97,4 +99,3 @@ async def login_for_access_token(
         data={"sub": user.login}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
-

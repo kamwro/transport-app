@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>app.schemas API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>app.schemas</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from typing import List
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
+
+
+class UserBase(BaseModel):
+    &#34;&#34;&#34;User base schema based on pydantic BaseModel
+
+    Args:
+        BaseModel (str | bool): basic info about users
+    &#34;&#34;&#34;    
+    login: str
+    first_name: str
+    last_name: str
+    address: str
+    is_admin: bool = False
+
+
+class CreateUser(UserBase):
+    &#34;&#34;&#34;Create user schema based on user base schema
+
+    Args:
+        UserBase (str): password
+    &#34;&#34;&#34;    
+    hashed_password: str
+
+
+class ActivateUser(UserBase):
+    &#34;&#34;&#34;Schema for activation code storage
+
+    Args:
+        UserBase (str): activation code
+    &#34;&#34;&#34;    
+    activation_code: str
+
+
+class User(UserBase):
+    &#34;&#34;&#34;Schema for default user info: autoincremented id and verification status
+
+    Args:
+        UserBase (int | bool)
+    &#34;&#34;&#34;    
+    id: int
+    is_active: bool = False
+    
+    class Config:
+        &#34;&#34;&#34;https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances
+        &#34;&#34;&#34;        
+        from_attributes=True
+        orm_mode = True
+
+
+class RideBase(BaseModel):
+    &#34;&#34;&#34;Ride base schema based on pydantic BaseModel
+
+    Args:
+        BaseModel (str | float | datetime)
+    &#34;&#34;&#34;    
+    start_city: str
+    destination_city: str
+    distance: float
+    km_fee: float
+    departure_date: datetime
+
+
+class RideCreate(RideBase):
+    &#34;&#34;&#34;Create ride schema, actually empty 
+    &#34;&#34;&#34;
+    pass 
+
+
+class Ride(RideBase):
+    &#34;&#34;&#34;Schema for default ride info: autoincremented id, calculated price, active status and id of user who took the ride (or will take)
+
+    Args:
+        RideBase (int | float | bool | None)
+    &#34;&#34;&#34;    
+    id: int
+    price: float
+    is_active: bool = True
+    user_id_taken: int | None = None
+
+    class Config:
+        &#34;&#34;&#34;https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances
+        &#34;&#34;&#34;        
+        from_attributes=True
+        orm_mode = True
+
+
+class Token(BaseModel):
+    &#34;&#34;&#34;Token schema based on pydantic BaseModel
+
+    Args:
+        BaseModel (str)
+    &#34;&#34;&#34;    
+    access_token: str
+    token_type: str
+
+    class Config:
+        &#34;&#34;&#34;https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances
+        &#34;&#34;&#34;        
+        orm_mode = True
+
+
+class TokenData(BaseModel):
+    &#34;&#34;&#34;Schema containing username attached to the token data
+
+    Args:
+        BaseModel (str | None)
+    &#34;&#34;&#34;    
+    username: str or None = None
+
+    class Config:
+        &#34;&#34;&#34;https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances
+        &#34;&#34;&#34;        
+        orm_mode = True
+
+
+class EmailSchema(BaseModel):
+    &#34;&#34;&#34;Email schema based on pydantic BaseModel
+
+    Args:
+        BaseModel (EmailStr | str)
+    &#34;&#34;&#34;   
+    email: List[EmailStr | str]</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="app.schemas.ActivateUser"><code class="flex name class">
+<span>class <span class="ident">ActivateUser</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Schema for activation code storage</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>UserBase</code></strong> :&ensp;<code>str</code></dt>
+<dd>activation code</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ActivateUser(UserBase):
+    &#34;&#34;&#34;Schema for activation code storage
+
+    Args:
+        UserBase (str): activation code
+    &#34;&#34;&#34;    
+    activation_code: str</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="app.schemas.UserBase" href="#app.schemas.UserBase">UserBase</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.ActivateUser.activation_code"><code class="name">var <span class="ident">activation_code</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.ActivateUser.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.ActivateUser.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="app.schemas.CreateUser"><code class="flex name class">
+<span>class <span class="ident">CreateUser</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create user schema based on user base schema</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>UserBase</code></strong> :&ensp;<code>str</code></dt>
+<dd>password</dd>
+</dl>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CreateUser(UserBase):
+    &#34;&#34;&#34;Create user schema based on user base schema
+
+    Args:
+        UserBase (str): password
+    &#34;&#34;&#34;    
+    hashed_password: str</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="app.schemas.UserBase" href="#app.schemas.UserBase">UserBase</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.CreateUser.hashed_password"><code class="name">var <span class="ident">hashed_password</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.CreateUser.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.CreateUser.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="app.schemas.EmailSchema"><code class="flex name class">
+<span>class <span class="ident">EmailSchema</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Email schema based on pydantic BaseModel</p>
+<h2 id="args">Args</h2>
+<p>BaseModel (EmailStr | str)
+Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EmailSchema(BaseModel):
+    &#34;&#34;&#34;Email schema based on pydantic BaseModel
+
+    Args:
+        BaseModel (EmailStr | str)
+    &#34;&#34;&#34;   
+    email: List[EmailStr | str]</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.EmailSchema.email"><code class="name">var <span class="ident">email</span> : List[pydantic.networks.EmailStr | str]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.EmailSchema.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.EmailSchema.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="app.schemas.Ride"><code class="flex name class">
+<span>class <span class="ident">Ride</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Schema for default ride info: autoincremented id, calculated price, active status and id of user who took the ride (or will take)</p>
+<h2 id="args">Args</h2>
+<p>RideBase (int | float | bool | None)
+Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Ride(RideBase):
+    &#34;&#34;&#34;Schema for default ride info: autoincremented id, calculated price, active status and id of user who took the ride (or will take)
+
+    Args:
+        RideBase (int | float | bool | None)
+    &#34;&#34;&#34;    
+    id: int
+    price: float
+    is_active: bool = True
+    user_id_taken: int | None = None
+
+    class Config:
+        &#34;&#34;&#34;https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances
+        &#34;&#34;&#34;        
+        from_attributes=True
+        orm_mode = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="app.schemas.RideBase" href="#app.schemas.RideBase">RideBase</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.Ride.Config"><code class="name">var <span class="ident">Config</span></code></dt>
+<dd>
+<div class="desc"><p><a href="https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances">https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances</a></p></div>
+</dd>
+<dt id="app.schemas.Ride.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.Ride.is_active"><code class="name">var <span class="ident">is_active</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.Ride.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.Ride.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.Ride.price"><code class="name">var <span class="ident">price</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.Ride.user_id_taken"><code class="name">var <span class="ident">user_id_taken</span> : int | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="app.schemas.RideBase"><code class="flex name class">
+<span>class <span class="ident">RideBase</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Ride base schema based on pydantic BaseModel</p>
+<h2 id="args">Args</h2>
+<p>BaseModel (str | float | datetime)
+Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RideBase(BaseModel):
+    &#34;&#34;&#34;Ride base schema based on pydantic BaseModel
+
+    Args:
+        BaseModel (str | float | datetime)
+    &#34;&#34;&#34;    
+    start_city: str
+    destination_city: str
+    distance: float
+    km_fee: float
+    departure_date: datetime</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="app.schemas.Ride" href="#app.schemas.Ride">Ride</a></li>
+<li><a title="app.schemas.RideCreate" href="#app.schemas.RideCreate">RideCreate</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.RideBase.departure_date"><code class="name">var <span class="ident">departure_date</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.RideBase.destination_city"><code class="name">var <span class="ident">destination_city</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.RideBase.distance"><code class="name">var <span class="ident">distance</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.RideBase.km_fee"><code class="name">var <span class="ident">km_fee</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.RideBase.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.RideBase.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.RideBase.start_city"><code class="name">var <span class="ident">start_city</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="app.schemas.RideCreate"><code class="flex name class">
+<span>class <span class="ident">RideCreate</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create ride schema, actually empty </p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RideCreate(RideBase):
+    &#34;&#34;&#34;Create ride schema, actually empty 
+    &#34;&#34;&#34;
+    pass </code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="app.schemas.RideBase" href="#app.schemas.RideBase">RideBase</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.RideCreate.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.RideCreate.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="app.schemas.Token"><code class="flex name class">
+<span>class <span class="ident">Token</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Token schema based on pydantic BaseModel</p>
+<h2 id="args">Args</h2>
+<p>BaseModel (str)
+Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Token(BaseModel):
+    &#34;&#34;&#34;Token schema based on pydantic BaseModel
+
+    Args:
+        BaseModel (str)
+    &#34;&#34;&#34;    
+    access_token: str
+    token_type: str
+
+    class Config:
+        &#34;&#34;&#34;https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances
+        &#34;&#34;&#34;        
+        orm_mode = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.Token.Config"><code class="name">var <span class="ident">Config</span></code></dt>
+<dd>
+<div class="desc"><p><a href="https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances">https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances</a></p></div>
+</dd>
+<dt id="app.schemas.Token.access_token"><code class="name">var <span class="ident">access_token</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.Token.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.Token.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.Token.token_type"><code class="name">var <span class="ident">token_type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="app.schemas.TokenData"><code class="flex name class">
+<span>class <span class="ident">TokenData</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Schema containing username attached to the token data</p>
+<h2 id="args">Args</h2>
+<p>BaseModel (str | None)
+Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TokenData(BaseModel):
+    &#34;&#34;&#34;Schema containing username attached to the token data
+
+    Args:
+        BaseModel (str | None)
+    &#34;&#34;&#34;    
+    username: str or None = None
+
+    class Config:
+        &#34;&#34;&#34;https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances
+        &#34;&#34;&#34;        
+        orm_mode = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.TokenData.Config"><code class="name">var <span class="ident">Config</span></code></dt>
+<dd>
+<div class="desc"><p><a href="https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances">https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances</a></p></div>
+</dd>
+<dt id="app.schemas.TokenData.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.TokenData.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.TokenData.username"><code class="name">var <span class="ident">username</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="app.schemas.User"><code class="flex name class">
+<span>class <span class="ident">User</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Schema for default user info: autoincremented id and verification status</p>
+<h2 id="args">Args</h2>
+<p>UserBase (int | bool)
+Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class User(UserBase):
+    &#34;&#34;&#34;Schema for default user info: autoincremented id and verification status
+
+    Args:
+        UserBase (int | bool)
+    &#34;&#34;&#34;    
+    id: int
+    is_active: bool = False
+    
+    class Config:
+        &#34;&#34;&#34;https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances
+        &#34;&#34;&#34;        
+        from_attributes=True
+        orm_mode = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="app.schemas.UserBase" href="#app.schemas.UserBase">UserBase</a></li>
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.User.Config"><code class="name">var <span class="ident">Config</span></code></dt>
+<dd>
+<div class="desc"><p><a href="https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances">https://docs.pydantic.dev/latest/usage/models/#orm-mode-aka-arbitrary-class-instances</a></p></div>
+</dd>
+<dt id="app.schemas.User.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.User.is_active"><code class="name">var <span class="ident">is_active</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.User.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.User.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="app.schemas.UserBase"><code class="flex name class">
+<span>class <span class="ident">UserBase</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>User base schema based on pydantic BaseModel</p>
+<h2 id="args">Args</h2>
+<p>BaseModel (str | bool): basic info about users
+Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<code>ValidationError</code>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><code>__init__</code> uses <code>__pydantic_self__</code> instead of the more common <code>self</code> for the first arg to
+allow <code>self</code> as a field name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class UserBase(BaseModel):
+    &#34;&#34;&#34;User base schema based on pydantic BaseModel
+
+    Args:
+        BaseModel (str | bool): basic info about users
+    &#34;&#34;&#34;    
+    login: str
+    first_name: str
+    last_name: str
+    address: str
+    is_admin: bool = False</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="app.schemas.ActivateUser" href="#app.schemas.ActivateUser">ActivateUser</a></li>
+<li><a title="app.schemas.CreateUser" href="#app.schemas.CreateUser">CreateUser</a></li>
+<li><a title="app.schemas.User" href="#app.schemas.User">User</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="app.schemas.UserBase.address"><code class="name">var <span class="ident">address</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.UserBase.first_name"><code class="name">var <span class="ident">first_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.UserBase.is_admin"><code class="name">var <span class="ident">is_admin</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.UserBase.last_name"><code class="name">var <span class="ident">last_name</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.UserBase.login"><code class="name">var <span class="ident">login</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.UserBase.model_config"><code class="name">var <span class="ident">model_config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="app.schemas.UserBase.model_fields"><code class="name">var <span class="ident">model_fields</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="app" href="index.html">app</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="app.schemas.ActivateUser" href="#app.schemas.ActivateUser">ActivateUser</a></code></h4>
+<ul class="">
+<li><code><a title="app.schemas.ActivateUser.activation_code" href="#app.schemas.ActivateUser.activation_code">activation_code</a></code></li>
+<li><code><a title="app.schemas.ActivateUser.model_config" href="#app.schemas.ActivateUser.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.ActivateUser.model_fields" href="#app.schemas.ActivateUser.model_fields">model_fields</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="app.schemas.CreateUser" href="#app.schemas.CreateUser">CreateUser</a></code></h4>
+<ul class="">
+<li><code><a title="app.schemas.CreateUser.hashed_password" href="#app.schemas.CreateUser.hashed_password">hashed_password</a></code></li>
+<li><code><a title="app.schemas.CreateUser.model_config" href="#app.schemas.CreateUser.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.CreateUser.model_fields" href="#app.schemas.CreateUser.model_fields">model_fields</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="app.schemas.EmailSchema" href="#app.schemas.EmailSchema">EmailSchema</a></code></h4>
+<ul class="">
+<li><code><a title="app.schemas.EmailSchema.email" href="#app.schemas.EmailSchema.email">email</a></code></li>
+<li><code><a title="app.schemas.EmailSchema.model_config" href="#app.schemas.EmailSchema.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.EmailSchema.model_fields" href="#app.schemas.EmailSchema.model_fields">model_fields</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="app.schemas.Ride" href="#app.schemas.Ride">Ride</a></code></h4>
+<ul class="two-column">
+<li><code><a title="app.schemas.Ride.Config" href="#app.schemas.Ride.Config">Config</a></code></li>
+<li><code><a title="app.schemas.Ride.id" href="#app.schemas.Ride.id">id</a></code></li>
+<li><code><a title="app.schemas.Ride.is_active" href="#app.schemas.Ride.is_active">is_active</a></code></li>
+<li><code><a title="app.schemas.Ride.model_config" href="#app.schemas.Ride.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.Ride.model_fields" href="#app.schemas.Ride.model_fields">model_fields</a></code></li>
+<li><code><a title="app.schemas.Ride.price" href="#app.schemas.Ride.price">price</a></code></li>
+<li><code><a title="app.schemas.Ride.user_id_taken" href="#app.schemas.Ride.user_id_taken">user_id_taken</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="app.schemas.RideBase" href="#app.schemas.RideBase">RideBase</a></code></h4>
+<ul class="two-column">
+<li><code><a title="app.schemas.RideBase.departure_date" href="#app.schemas.RideBase.departure_date">departure_date</a></code></li>
+<li><code><a title="app.schemas.RideBase.destination_city" href="#app.schemas.RideBase.destination_city">destination_city</a></code></li>
+<li><code><a title="app.schemas.RideBase.distance" href="#app.schemas.RideBase.distance">distance</a></code></li>
+<li><code><a title="app.schemas.RideBase.km_fee" href="#app.schemas.RideBase.km_fee">km_fee</a></code></li>
+<li><code><a title="app.schemas.RideBase.model_config" href="#app.schemas.RideBase.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.RideBase.model_fields" href="#app.schemas.RideBase.model_fields">model_fields</a></code></li>
+<li><code><a title="app.schemas.RideBase.start_city" href="#app.schemas.RideBase.start_city">start_city</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="app.schemas.RideCreate" href="#app.schemas.RideCreate">RideCreate</a></code></h4>
+<ul class="">
+<li><code><a title="app.schemas.RideCreate.model_config" href="#app.schemas.RideCreate.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.RideCreate.model_fields" href="#app.schemas.RideCreate.model_fields">model_fields</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="app.schemas.Token" href="#app.schemas.Token">Token</a></code></h4>
+<ul class="">
+<li><code><a title="app.schemas.Token.Config" href="#app.schemas.Token.Config">Config</a></code></li>
+<li><code><a title="app.schemas.Token.access_token" href="#app.schemas.Token.access_token">access_token</a></code></li>
+<li><code><a title="app.schemas.Token.model_config" href="#app.schemas.Token.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.Token.model_fields" href="#app.schemas.Token.model_fields">model_fields</a></code></li>
+<li><code><a title="app.schemas.Token.token_type" href="#app.schemas.Token.token_type">token_type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="app.schemas.TokenData" href="#app.schemas.TokenData">TokenData</a></code></h4>
+<ul class="">
+<li><code><a title="app.schemas.TokenData.Config" href="#app.schemas.TokenData.Config">Config</a></code></li>
+<li><code><a title="app.schemas.TokenData.model_config" href="#app.schemas.TokenData.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.TokenData.model_fields" href="#app.schemas.TokenData.model_fields">model_fields</a></code></li>
+<li><code><a title="app.schemas.TokenData.username" href="#app.schemas.TokenData.username">username</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="app.schemas.User" href="#app.schemas.User">User</a></code></h4>
+<ul class="">
+<li><code><a title="app.schemas.User.Config" href="#app.schemas.User.Config">Config</a></code></li>
+<li><code><a title="app.schemas.User.id" href="#app.schemas.User.id">id</a></code></li>
+<li><code><a title="app.schemas.User.is_active" href="#app.schemas.User.is_active">is_active</a></code></li>
+<li><code><a title="app.schemas.User.model_config" href="#app.schemas.User.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.User.model_fields" href="#app.schemas.User.model_fields">model_fields</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="app.schemas.UserBase" href="#app.schemas.UserBase">UserBase</a></code></h4>
+<ul class="two-column">
+<li><code><a title="app.schemas.UserBase.address" href="#app.schemas.UserBase.address">address</a></code></li>
+<li><code><a title="app.schemas.UserBase.first_name" href="#app.schemas.UserBase.first_name">first_name</a></code></li>
+<li><code><a title="app.schemas.UserBase.is_admin" href="#app.schemas.UserBase.is_admin">is_admin</a></code></li>
+<li><code><a title="app.schemas.UserBase.last_name" href="#app.schemas.UserBase.last_name">last_name</a></code></li>
+<li><code><a title="app.schemas.UserBase.login" href="#app.schemas.UserBase.login">login</a></code></li>
+<li><code><a title="app.schemas.UserBase.model_config" href="#app.schemas.UserBase.model_config">model_config</a></code></li>
+<li><code><a title="app.schemas.UserBase.model_fields" href="#app.schemas.UserBase.model_fields">model_fields</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

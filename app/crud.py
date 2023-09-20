@@ -63,11 +63,9 @@ def remove_user(db: Session, user_login: str):
         user_login (str): user login
     """    
     user = get_user_by_login(db, user_login)
-    try:
+    if user is not None:
         db.delete(user)
         db.commit()
-    except Exception as e:
-        print(f"{type(e)} - there is no user.")
 
 
 def activate_user(db: Session, user_login: str) -> schemas.User:
@@ -76,8 +74,6 @@ def activate_user(db: Session, user_login: str) -> schemas.User:
     Args:
         db (Session): database session
         user_login (str): user login
-    Raises:
-        ValueError: if login doesnt match any of the users
 
     Returns:
         schemas.User
@@ -95,8 +91,6 @@ def deactivate_user(db: Session, user_login: str) -> schemas.User:
     Args:
         db (Session): database session
         user_login (str): user login
-    Raises:
-        ValueError: if login doesnt match any of the users
 
     Returns:
         schemas.User

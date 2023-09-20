@@ -18,7 +18,9 @@ engine_tests = create_engine(
     poolclass=StaticPool
 )
 
+
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine_tests)
+
 
 Base = declarative_base()
 

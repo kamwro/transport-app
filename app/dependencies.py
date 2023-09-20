@@ -8,6 +8,7 @@ from fastapi.security import OAuth2PasswordBearer
 from .database import SessionLocal, TestingSessionLocal
 from . import crud, schemas
 
+
 load_dotenv("./.env")
 
 
@@ -16,6 +17,7 @@ class Envs:
    """ 
    SECRET_KEY=os.getenv('SECRET_KEY')
    ALGORITHM=os.getenv('ALGORITHM')
+
 
 def get_db():
     """Tries to yield database session maker and closes it in any case
@@ -29,6 +31,7 @@ def get_db():
     finally:
         db.close()
 
+
 def override_get_db():
     """Tries to yield in-memory database session maker and closes it in any case
 
@@ -41,7 +44,9 @@ def override_get_db():
     finally:
         db.close()
 
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)) -> schemas.User:
     """Creates an user dependency based on a token and database session dependency.
@@ -120,4 +125,3 @@ async def get_current_active_admin(
             detail="Not a superuser."
             )
     return current_user
-

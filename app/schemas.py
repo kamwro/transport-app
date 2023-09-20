@@ -2,6 +2,7 @@ from typing import List
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
+
 class UserBase(BaseModel):
     """User base schema based on pydantic BaseModel
 
@@ -14,6 +15,7 @@ class UserBase(BaseModel):
     address: str
     is_admin: bool = False
 
+
 class CreateUser(UserBase):
     """Create user schema based on user base schema
 
@@ -22,6 +24,7 @@ class CreateUser(UserBase):
     """    
     hashed_password: str
 
+
 class ActivateUser(UserBase):
     """Schema for activation code storage
 
@@ -29,6 +32,7 @@ class ActivateUser(UserBase):
         UserBase (str): activation code
     """    
     activation_code: str
+
 
 class User(UserBase):
     """Schema for default user info: autoincremented id and verification status
@@ -45,6 +49,7 @@ class User(UserBase):
         from_attributes=True
         orm_mode = True
 
+
 class RideBase(BaseModel):
     """Ride base schema based on pydantic BaseModel
 
@@ -57,10 +62,12 @@ class RideBase(BaseModel):
     km_fee: float
     departure_date: datetime
 
+
 class RideCreate(RideBase):
     """Create ride schema, actually empty 
     """
     pass 
+
 
 class Ride(RideBase):
     """Schema for default ride info: autoincremented id, calculated price, active status and id of user who took the ride (or will take)
@@ -79,6 +86,7 @@ class Ride(RideBase):
         from_attributes=True
         orm_mode = True
 
+
 class Token(BaseModel):
     """Token schema based on pydantic BaseModel
 
@@ -93,6 +101,7 @@ class Token(BaseModel):
         """        
         orm_mode = True
 
+
 class TokenData(BaseModel):
     """Schema containing username attached to the token data
 
@@ -106,6 +115,7 @@ class TokenData(BaseModel):
         """        
         orm_mode = True
 
+
 class EmailSchema(BaseModel):
     """Email schema based on pydantic BaseModel
 
@@ -113,5 +123,3 @@ class EmailSchema(BaseModel):
         BaseModel (EmailStr | str)
     """   
     email: List[EmailStr | str]
-
-

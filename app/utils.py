@@ -81,6 +81,7 @@ class SecurityUtils():
         encoded_jwt = jwt.encode(to_encode, Envs.SECRET_KEY, algorithm=Envs.ALGORITHM)
         return encoded_jwt
 
+
 class EmailUtils():
     """Class container for email utils, like methods sending emails
     """    
@@ -97,6 +98,7 @@ class EmailUtils():
         VALIDATE_CERTS = True
     )
     
+
     @staticmethod
     def is_email_valid(username: str) -> bool:
         """Validates an email address using regex
@@ -110,6 +112,7 @@ class EmailUtils():
         email_regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
         return re.fullmatch(email_regex, username)
     
+
     @staticmethod
     async def send_activation_link(user: User):
         """Sends an activation link to the user email
@@ -139,6 +142,7 @@ class EmailUtils():
         fm = FastMail(EmailUtils.conf)
         await fm.send_message(message)
     
+
     @staticmethod
     async def send_self_deletion_email(user: User):
         """Sends an deletion confirmation to the user email
@@ -170,6 +174,7 @@ class EmailUtils():
         
         fm = FastMail(EmailUtils.conf)
         await fm.send_message(message)
+
 
     @staticmethod
     async def send_deletion_email(user: User):

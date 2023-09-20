@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>app.routers.users API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>app.routers.users</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import re
+from starlette.responses import JSONResponse
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
+from typing import Annotated
+from sqlalchemy.orm import Session
+from ..utils import Tags, EmailUtils
+from ..dependencies import get_db, get_current_user, get_current_active_user
+from .. import crud, schemas
+
+
+router = APIRouter(
+    prefix=&#34;/users&#34;,
+    dependencies=[Depends(get_db)],
+    responses={404: {&#34;description&#34;: &#34;Not found&#34;}},
+)
+
+
+@router.post(&#34;/&#34;, response_model=schemas.User, summary= &#34;Create an user account&#34;,
+          response_description = &#34;Succesfully created an user account.&#34;,
+          tags = [Tags.acc_create])
+async def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)) -&gt; JSONResponse:
+    &#34;&#34;&#34;
+    Creates an user account, providing information:
+
+    - **login** (str): an email address that will be used to log in,
+    - **first_name** (str): first name of the user,
+    - **last_name** (str): last_name of the user,
+    - **address** (str): billing address,
+    - **password** (str): password that will be used to log in and stored as a hash in the database
+    - **is_admin** (bool): post **true** if you wish to create an admin account
+
+    After posting the account informations, an verification link will be send to given email (login).
+    In order to activate your account, paste the link into the browser with app working - will redirect
+    you to the /users/me/{user_id}/activate/{activation_code} endpoint.
+
+    If email address is not valid, the method will raise a HTTPException. That doesn&#39;t apply to admin users.
+
+    **Users with the admin status are active by default and thus do not have to activate their account.**
+
+    Returns JSONResponse with user data and confirmation about sending an activation email.
+    &#34;&#34;&#34;
+
+    user_login_invalid = not EmailUtils.is_email_valid(username=user.login)
+
+    if user_login_invalid and user.is_admin == False:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED, 
+            detail=&#34;Login is not a valid email address.&#34;
+        )
+    db_user = crud.get_user_by_login(db=db, user_login=user.login)
+    if db_user:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED, 
+            detail=&#34;Email already registered&#34;
+            )
+    crud.create_user(db=db, user=user)
+    new_user = crud.get_user_by_login(db=db, user_login=user.login)
+
+    user_data = user.model_dump()
+    user_data = {info:user_data[info] for info in user_data if info!=&#39;hashed_password&#39;}
+    
+    if new_user.is_admin == False:
+        await EmailUtils.send_activation_link(user=new_user)
+        return JSONResponse(status_code=200, content={&#34;user data: &#34;: [user_data], &#34;message&#34;: f&#34;activation link has been sent to {new_user.login}&#34;})
+    else:
+        return JSONResponse(status_code=200, content={&#34;user data: &#34;: [user_data], &#34;message&#34;: &#34;user is a superuser. Automatic account activation.&#34;})
+
+
+@router.get(&#34;/me/&#34;, response_model = schemas.User, summary = &#34;Read my info&#34;,
+             response_description = &#34;Successfully read current user info.&#34;, tags = [Tags.my_acc])
+async def read_my_info(
+    current_user: Annotated[schemas.User, Depends(get_current_active_user)]
+) -&gt; schemas.User:
+    &#34;&#34;&#34;
+    Returns an User object with your account information listed.
+    Won&#39;t show your hashed password or activation code.
+    &#34;&#34;&#34;
+    return current_user
+
+
+@router.get(&#34;/me/send-activation-code&#34;, summary = &#34;Resend activation code&#34;,
+           response_description = &#34;Successfully send activation email.&#34;, tags = [Tags.my_acc])
+async def send_activation_code(current_user: Annotated[schemas.User, Depends(get_current_user)]) -&gt; JSONResponse:
+    &#34;&#34;&#34;
+    Sends an activation link to your email address. 
+    Could be useful if the first activation email will gone missing, be stucked in the spam folder or deleted by accident.
+
+    Returns JSONResponse with the success confirmation message or raises a HTTPException if user is already active.
+    &#34;&#34;&#34;
+    if current_user.is_active == True:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+            detail=&#34;User already active&#34;,
+            headers={&#34;WWW-Authenticate&#34;: &#34;Bearer&#34;},
+        )
+    await EmailUtils.send_activation_link(user=current_user)
+    return JSONResponse(status_code=200, content={&#34;message&#34;: f&#34;activation code has been sent to {current_user.login}&#34;})
+
+
+@router.get(&#34;/{user_id}/activate/{activation_code}&#34;, summary = &#34;Activate an user&#34;,
+           response_description = &#34;Successfully activated an account.&#34;, tags = [Tags.my_acc])
+async def activate_my_account(user_id: int, activation_code: str,
+db: Session = Depends(get_db)) -&gt; JSONResponse:
+    &#34;&#34;&#34;
+    This endpoint was created to serve as an account verification link, that&#39;s why its GET, not PATCH/PUT.
+
+    You can also activate your account by providing some information: 
+
+    - **user_id** (int): your user id,
+    - **activation_code** (str): your activation code, generated by account creation.
+    You can only get it straight from the database.
+
+    After using this endpoint, the user should be now active.
+
+    Returns JSONResponse with the success confirmation message.
+    &#34;&#34;&#34;
+    user_login = crud.get_user_by_ID(db=db, user_id=user_id).login
+    if crud.get_user_by_login(db=db,user_login=user_login).is_active == True:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+            detail=&#34;User already active&#34;,
+            headers={&#34;WWW-Authenticate&#34;: &#34;Bearer&#34;},
+        )
+    elif crud.get_user_by_login(db=db,user_login=user_login).activation_code != activation_code:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=&#34;Incorrect activation code.&#34;,
+            headers={&#34;WWW-Authenticate&#34;: &#34;Bearer&#34;}
+        )
+    crud.activate_user(db=db, user_login=user_login)
+    return JSONResponse(status_code = 200, content={&#34;message&#34;: &#34;your account has been activated.&#34;})
+
+
+@router.delete(&#34;/me/delete&#34;, response_model=schemas.User, summary = &#34;Delete an user&#34;,
+               response_description = &#34;Successfully deleted an account.&#34;, tags = [Tags.my_acc])
+async def delete_my_account(current_user: Annotated[schemas.User, Depends(get_current_user)],
+db: Session = Depends(get_db)) -&gt; JSONResponse:
+    &#34;&#34;&#34;
+    Deletes your account permanently.
+
+    After deletion, you will receive an email to your login email address confirming your action.
+
+    Returns JSONResponse with the success confirmation message.
+    &#34;&#34;&#34;
+    if current_user.is_admin:
+        crud.remove_user(db=db, user_login=current_user.login)
+        return JSONResponse(status_code=200, content={&#34;message&#34;: &#34;Your account has been deleted.&#34;})
+    else:
+        username = current_user.login
+        await EmailUtils.send_self_deletion_email(user=current_user)
+        crud.remove_user(db=db, user_login=current_user.login)
+        return JSONResponse(status_code=200, content={&#34;message&#34;: f&#34;Your account has been deleted. An email has been sent to the {username}.&#34;})</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="app.routers.users.activate_my_account"><code class="name flex">
+<span>async def <span class="ident">activate_my_account</span></span>(<span>user_id: int, activation_code: str, db: sqlalchemy.orm.session.Session = Depends(get_db)) ‑> starlette.responses.JSONResponse</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This endpoint was created to serve as an account verification link, that's why its GET, not PATCH/PUT.</p>
+<p>You can also activate your account by providing some information: </p>
+<ul>
+<li><strong>user_id</strong> (int): your user id,</li>
+<li><strong>activation_code</strong> (str): your activation code, generated by account creation.
+You can only get it straight from the database.</li>
+</ul>
+<p>After using this endpoint, the user should be now active.</p>
+<p>Returns JSONResponse with the success confirmation message.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/{user_id}/activate/{activation_code}&#34;, summary = &#34;Activate an user&#34;,
+           response_description = &#34;Successfully activated an account.&#34;, tags = [Tags.my_acc])
+async def activate_my_account(user_id: int, activation_code: str,
+db: Session = Depends(get_db)) -&gt; JSONResponse:
+    &#34;&#34;&#34;
+    This endpoint was created to serve as an account verification link, that&#39;s why its GET, not PATCH/PUT.
+
+    You can also activate your account by providing some information: 
+
+    - **user_id** (int): your user id,
+    - **activation_code** (str): your activation code, generated by account creation.
+    You can only get it straight from the database.
+
+    After using this endpoint, the user should be now active.
+
+    Returns JSONResponse with the success confirmation message.
+    &#34;&#34;&#34;
+    user_login = crud.get_user_by_ID(db=db, user_id=user_id).login
+    if crud.get_user_by_login(db=db,user_login=user_login).is_active == True:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+            detail=&#34;User already active&#34;,
+            headers={&#34;WWW-Authenticate&#34;: &#34;Bearer&#34;},
+        )
+    elif crud.get_user_by_login(db=db,user_login=user_login).activation_code != activation_code:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=&#34;Incorrect activation code.&#34;,
+            headers={&#34;WWW-Authenticate&#34;: &#34;Bearer&#34;}
+        )
+    crud.activate_user(db=db, user_login=user_login)
+    return JSONResponse(status_code = 200, content={&#34;message&#34;: &#34;your account has been activated.&#34;})</code></pre>
+</details>
+</dd>
+<dt id="app.routers.users.create_user"><code class="name flex">
+<span>async def <span class="ident">create_user</span></span>(<span>user: <a title="app.schemas.CreateUser" href="../schemas.html#app.schemas.CreateUser">CreateUser</a>, db: sqlalchemy.orm.session.Session = Depends(get_db)) ‑> starlette.responses.JSONResponse</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates an user account, providing information:</p>
+<ul>
+<li><strong>login</strong> (str): an email address that will be used to log in,</li>
+<li><strong>first_name</strong> (str): first name of the user,</li>
+<li><strong>last_name</strong> (str): last_name of the user,</li>
+<li><strong>address</strong> (str): billing address,</li>
+<li><strong>password</strong> (str): password that will be used to log in and stored as a hash in the database</li>
+<li><strong>is_admin</strong> (bool): post <strong>true</strong> if you wish to create an admin account</li>
+</ul>
+<p>After posting the account informations, an verification link will be send to given email (login).
+In order to activate your account, paste the link into the browser with app working - will redirect
+you to the /users/me/{user_id}/activate/{activation_code} endpoint.</p>
+<p>If email address is not valid, the method will raise a HTTPException. That doesn't apply to admin users.</p>
+<p><strong>Users with the admin status are active by default and thus do not have to activate their account.</strong></p>
+<p>Returns JSONResponse with user data and confirmation about sending an activation email.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.post(&#34;/&#34;, response_model=schemas.User, summary= &#34;Create an user account&#34;,
+          response_description = &#34;Succesfully created an user account.&#34;,
+          tags = [Tags.acc_create])
+async def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)) -&gt; JSONResponse:
+    &#34;&#34;&#34;
+    Creates an user account, providing information:
+
+    - **login** (str): an email address that will be used to log in,
+    - **first_name** (str): first name of the user,
+    - **last_name** (str): last_name of the user,
+    - **address** (str): billing address,
+    - **password** (str): password that will be used to log in and stored as a hash in the database
+    - **is_admin** (bool): post **true** if you wish to create an admin account
+
+    After posting the account informations, an verification link will be send to given email (login).
+    In order to activate your account, paste the link into the browser with app working - will redirect
+    you to the /users/me/{user_id}/activate/{activation_code} endpoint.
+
+    If email address is not valid, the method will raise a HTTPException. That doesn&#39;t apply to admin users.
+
+    **Users with the admin status are active by default and thus do not have to activate their account.**
+
+    Returns JSONResponse with user data and confirmation about sending an activation email.
+    &#34;&#34;&#34;
+
+    user_login_invalid = not EmailUtils.is_email_valid(username=user.login)
+
+    if user_login_invalid and user.is_admin == False:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED, 
+            detail=&#34;Login is not a valid email address.&#34;
+        )
+    db_user = crud.get_user_by_login(db=db, user_login=user.login)
+    if db_user:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED, 
+            detail=&#34;Email already registered&#34;
+            )
+    crud.create_user(db=db, user=user)
+    new_user = crud.get_user_by_login(db=db, user_login=user.login)
+
+    user_data = user.model_dump()
+    user_data = {info:user_data[info] for info in user_data if info!=&#39;hashed_password&#39;}
+    
+    if new_user.is_admin == False:
+        await EmailUtils.send_activation_link(user=new_user)
+        return JSONResponse(status_code=200, content={&#34;user data: &#34;: [user_data], &#34;message&#34;: f&#34;activation link has been sent to {new_user.login}&#34;})
+    else:
+        return JSONResponse(status_code=200, content={&#34;user data: &#34;: [user_data], &#34;message&#34;: &#34;user is a superuser. Automatic account activation.&#34;})</code></pre>
+</details>
+</dd>
+<dt id="app.routers.users.delete_my_account"><code class="name flex">
+<span>async def <span class="ident">delete_my_account</span></span>(<span>current_user: typing.Annotated[<a title="app.schemas.User" href="../schemas.html#app.schemas.User">User</a>, Depends(get_current_user)], db: sqlalchemy.orm.session.Session = Depends(get_db)) ‑> starlette.responses.JSONResponse</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes your account permanently.</p>
+<p>After deletion, you will receive an email to your login email address confirming your action.</p>
+<p>Returns JSONResponse with the success confirmation message.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.delete(&#34;/me/delete&#34;, response_model=schemas.User, summary = &#34;Delete an user&#34;,
+               response_description = &#34;Successfully deleted an account.&#34;, tags = [Tags.my_acc])
+async def delete_my_account(current_user: Annotated[schemas.User, Depends(get_current_user)],
+db: Session = Depends(get_db)) -&gt; JSONResponse:
+    &#34;&#34;&#34;
+    Deletes your account permanently.
+
+    After deletion, you will receive an email to your login email address confirming your action.
+
+    Returns JSONResponse with the success confirmation message.
+    &#34;&#34;&#34;
+    if current_user.is_admin:
+        crud.remove_user(db=db, user_login=current_user.login)
+        return JSONResponse(status_code=200, content={&#34;message&#34;: &#34;Your account has been deleted.&#34;})
+    else:
+        username = current_user.login
+        await EmailUtils.send_self_deletion_email(user=current_user)
+        crud.remove_user(db=db, user_login=current_user.login)
+        return JSONResponse(status_code=200, content={&#34;message&#34;: f&#34;Your account has been deleted. An email has been sent to the {username}.&#34;})</code></pre>
+</details>
+</dd>
+<dt id="app.routers.users.read_my_info"><code class="name flex">
+<span>async def <span class="ident">read_my_info</span></span>(<span>current_user: typing.Annotated[<a title="app.schemas.User" href="../schemas.html#app.schemas.User">User</a>, Depends(get_current_active_user)]) ‑> <a title="app.schemas.User" href="../schemas.html#app.schemas.User">User</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns an User object with your account information listed.
+Won't show your hashed password or activation code.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/me/&#34;, response_model = schemas.User, summary = &#34;Read my info&#34;,
+             response_description = &#34;Successfully read current user info.&#34;, tags = [Tags.my_acc])
+async def read_my_info(
+    current_user: Annotated[schemas.User, Depends(get_current_active_user)]
+) -&gt; schemas.User:
+    &#34;&#34;&#34;
+    Returns an User object with your account information listed.
+    Won&#39;t show your hashed password or activation code.
+    &#34;&#34;&#34;
+    return current_user</code></pre>
+</details>
+</dd>
+<dt id="app.routers.users.send_activation_code"><code class="name flex">
+<span>async def <span class="ident">send_activation_code</span></span>(<span>current_user: typing.Annotated[<a title="app.schemas.User" href="../schemas.html#app.schemas.User">User</a>, Depends(get_current_user)]) ‑> starlette.responses.JSONResponse</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sends an activation link to your email address.
+Could be useful if the first activation email will gone missing, be stucked in the spam folder or deleted by accident.</p>
+<p>Returns JSONResponse with the success confirmation message or raises a HTTPException if user is already active.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@router.get(&#34;/me/send-activation-code&#34;, summary = &#34;Resend activation code&#34;,
+           response_description = &#34;Successfully send activation email.&#34;, tags = [Tags.my_acc])
+async def send_activation_code(current_user: Annotated[schemas.User, Depends(get_current_user)]) -&gt; JSONResponse:
+    &#34;&#34;&#34;
+    Sends an activation link to your email address. 
+    Could be useful if the first activation email will gone missing, be stucked in the spam folder or deleted by accident.
+
+    Returns JSONResponse with the success confirmation message or raises a HTTPException if user is already active.
+    &#34;&#34;&#34;
+    if current_user.is_active == True:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+            detail=&#34;User already active&#34;,
+            headers={&#34;WWW-Authenticate&#34;: &#34;Bearer&#34;},
+        )
+    await EmailUtils.send_activation_link(user=current_user)
+    return JSONResponse(status_code=200, content={&#34;message&#34;: f&#34;activation code has been sent to {current_user.login}&#34;})</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="app.routers" href="index.html">app.routers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="app.routers.users.activate_my_account" href="#app.routers.users.activate_my_account">activate_my_account</a></code></li>
+<li><code><a title="app.routers.users.create_user" href="#app.routers.users.create_user">create_user</a></code></li>
+<li><code><a title="app.routers.users.delete_my_account" href="#app.routers.users.delete_my_account">delete_my_account</a></code></li>
+<li><code><a title="app.routers.users.read_my_info" href="#app.routers.users.read_my_info">read_my_info</a></code></li>
+<li><code><a title="app.routers.users.send_activation_code" href="#app.routers.users.send_activation_code">send_activation_code</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
