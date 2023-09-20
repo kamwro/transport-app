@@ -1,6 +1,6 @@
 # Transport Management App Example
 
-Build with [FastAPI](https://fastapi.tiangolo.com/) and [PostgreSQL](https://www.postgresql.org/) backend app that lets you manage rides that people can book to travel.
+Built with [FastAPI](https://fastapi.tiangolo.com/) and [PostgreSQL](https://www.postgresql.org/) backend app that lets you manage rides that people can book to travel.
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ MAIL_PORT = 587 # should be fine - check your email SMTP server
 MAIL_SERVER = <server> # SMTP server, for example outlook emails might have: smtp.office365.com
 
 # this will be used for tests and must be a valid email addresses
-TEST_MAIL = <mail>
+TEST_MAIL = <mail> # don't leave it like this even if you won't do testing, because it will produce an error
 
 # token and authentication stuff
 SECRET_KEY = <secret> # run $ openssl rand -hex 32 in a terminal and paste the result
@@ -83,7 +83,13 @@ Some of the design patterns used in my project:
 
 ## Feedback
 
-More than welcome!
+More than welcome! Pull requests or leave a comment if you wish.
+
+## Future Plans
+
+1. Update to SQLAlchemy 2.0
+2. Write frontend
+3. Introduce analytics for stored data
 
 ## License 
 
