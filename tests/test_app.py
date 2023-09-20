@@ -1,5 +1,4 @@
 import pytest
-import sqlite3
 from fastapi.encoders import jsonable_encoder
 from app.main import app
 from app import schemas, dependencies
@@ -16,13 +15,36 @@ app.dependency_overrides[dependencies.get_db] = dependencies.override_get_db
 
 
 def test_welcome_to_the_app(client):
+    """Trying:
+        get("/")
+
+    Expecting: 
+        status code: 200 (OK)
+
+        message: "Hello world! Go to the /docs."
+
+    Args:
+        client (Generator): yields test client
+    """
     response = client.get("/")
     assert response.status_code == 200, response.text
     assert response.json()['message'] == "Hello world! Go to the /docs."
 
 
 def test_create_user(client, test_user_schema):
-    user = test_user_schema["with_password"]
+    """Trying:
+        post("/users/") user not an admin
+
+    Expecting: 
+        status code: 200 (OK)
+        
+        response with message: "activation link has been sent to <login>"
+
+    Args:
+        client (Generator): yields test client
+        test_user_schema (schema.CreateUser): user data
+    """
+    user = test_user_schema
     user = jsonable_encoder(user)
     response = client.post("/users/", json = user)
     assert response.status_code == 200
@@ -30,7 +52,19 @@ def test_create_user(client, test_user_schema):
 
 
 def test_create_user_email_already_registered(client, test_user_schema):
-    user = test_user_schema["with_password"]
+    """Trying:
+        post("/users/") using login that is already registered
+
+    Expecting: 
+        status code: 405 (Method Not Allowed)
+        
+        raises an exception with detail: "Email already registered"
+
+    Args:
+        client (Generator): yields test client
+        test_user_schema (schema.CreateUser): user data
+    """
+    user = test_user_schema
     user = jsonable_encoder(user)
     response = client.post("/users/", json = user)
     assert response.status_code == 405
@@ -38,6 +72,18 @@ def test_create_user_email_already_registered(client, test_user_schema):
 
 
 def test_create_user_admin(client, test_admin_schema):
+    """Trying:
+        post("/users/") specifying that we want to create an admin account
+
+    Expecting: 
+        status code: 200 (OK)
+        
+        response with message: "user is a superuser. Automatic account activation."
+
+    Args:
+        client (Generator): yields test client
+        test_admin_schema (schema.CreateUser): admin data
+    """
     user = test_admin_schema
     user = jsonable_encoder(user)
     response = client.post("/users/", json = user)
@@ -45,15 +91,18 @@ def test_create_user_admin(client, test_admin_schema):
     assert response.json()['message'] == "user is a superuser. Automatic account activation."
 
 
-def test_create_user_email_already_registered(client, test_user_schema):
-    user = test_user_schema["with_password"]
-    user = jsonable_encoder(user)
-    response = client.post("/users/", json = user)
-    assert response.status_code == 405
-    assert response.json() == {"detail": "Email already registered"}
-
-
 def test_create_user_email_not_valid(client):
+    """Trying:
+        post("/users/") using login that is not in email format (and user not an admin)
+
+    Expecting: 
+        status code: 405 (Method Not Allowed)
+        
+        raises an exception with detail: "Login is not a valid email address."
+
+    Args:
+        client (Generator): yields test client
+    """
     user = schemas.CreateUser(login="fake@", first_name="Arnold",
                             last_name="Tester", address="Westworld",
                             is_admin=False, hashed_password="admin123")
@@ -64,6 +113,20 @@ def test_create_user_email_not_valid(client):
 
 
 def test_login(client, test_user):
+    """Trying:
+        post("/token") with valid credentials
+
+    Expecting: 
+        status code: 200 (OK)
+        
+        token exists
+
+        returns token
+
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     response = client.post("/token", data = test_user)
     assert response.status_code == 200
     token = response.json()["access_token"]
@@ -71,7 +134,36 @@ def test_login(client, test_user):
     return token
 
 
+def test_login_invalid_credentials(client):
+    """Trying:
+        post("/token") with invalid credentials
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+        raises an exception with detail: "Incorrect login or password"
+
+    Args:
+        client (Generator): yields test client
+    """
+    response = client.post("/token", data = {"username": "fake_login", "password": "fake_password"})
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Incorrect login or password"}
+
+
 def test_read_my_info_not_active(client, test_user):
+    """Trying:
+        get("/user/me") as inactive user
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+        raises an exception with detail: "Inactive user"
+
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get("/users/me/", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
