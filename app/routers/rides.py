@@ -1,24 +1,10 @@
 from starlette.responses import JSONResponse
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from typing import Annotated
 from sqlalchemy.orm import Session
-from ..utils import Tags, Envs
+from ..utils import Tags, EmailUtils
 from ..dependencies import get_db, get_current_active_user
 from .. import crud, schemas
-
-
-conf = ConnectionConfig(
-   MAIL_USERNAME=Envs.MAIL_USERNAME,
-   MAIL_PASSWORD=Envs.MAIL_PASSWORD,
-   MAIL_FROM=Envs.MAIL_FROM,
-   MAIL_PORT=Envs.MAIL_PORT,
-   MAIL_SERVER=Envs.MAIL_SERVER,
-   MAIL_STARTTLS=True,
-   MAIL_SSL_TLS=False,
-   USE_CREDENTIALS = True,
-   VALIDATE_CERTS = True
-)
 
 
 router = APIRouter(
@@ -51,36 +37,7 @@ async def reserve_ride(ride_id: int, current_user: Annotated[schemas.User, Depen
             detail="The ride is no longer active."
         )
     crud.archivise_ride(db=db, ride_id=ride_id, user_id_taken=current_user.id)
-    template = """
-        <html>
-        <body>
-         
- 
-<p>Hi """+current_user.first_name+""",
-        <br>Here are the details regarding your reserved ride: </p>
-        <br>
-        <strong> From: </strong> """+ride.start_city+""" <br>
-        <strong> To: </strong> """+ride.destination_city+""" <br>
-        <strong> Distance (km): </strong> """+str(ride.distance)+""" <br>
-        <strong> Fee per km: </strong> """+str(ride.km_fee)+""" <br>
-        <strong> Total price: </strong> """+str(ride.price)+""" <br>
-        <strong> Departure date: </strong> """+ride.departure_date.strftime('%y-%m-%d %H:%M')+""" <br>
-        <br>
-        <p> Thank you for using our services. </p>
- 
- 
-        </body>
-        </html>
-        """
-    email = schemas.EmailSchema(email=[current_user.login])
-    message = MessageSchema(
-        subject=f"Your ride from {ride.start_city} to {ride.destination_city}",
-        recipients=email.model_dump().get("email"),
-        body=template,
-        subtype=MessageType.html
-        )
-    fm = FastMail(conf)
-    await fm.send_message(message)
+    await EmailUtils.send_booking_confirmation_email(user=current_user, ride=ride)
     return JSONResponse(status_code=200, content={"message": f"The ride was booked successfully and a detailed email has been sent to {current_user.login}"})
     
 

@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from passlib.context import CryptContext
 from jose import jwt
-from .schemas import EmailSchema, User
+from .schemas import EmailSchema, User, Ride
 
 
 load_dotenv("./.env")
@@ -172,6 +172,39 @@ class EmailUtils():
             subtype=MessageType.html
             )
         
+        fm = FastMail(EmailUtils.conf)
+        await fm.send_message(message)
+
+    @staticmethod
+    async def send_booking_confirmation_email(user: User, ride: Ride):
+        template = """
+        <html>
+        <body>
+         
+ 
+<p>Hi """+user.first_name+""",
+        <br>Here are the details regarding your reserved ride: </p>
+        <br>
+        <strong> From: </strong> """+ride.start_city+""" <br>
+        <strong> To: </strong> """+ride.destination_city+""" <br>
+        <strong> Distance (km): </strong> """+str(ride.distance)+""" <br>
+        <strong> Fee per km: </strong> """+str(ride.km_fee)+""" <br>
+        <strong> Total price: </strong> """+str(ride.price)+""" <br>
+        <strong> Departure date: </strong> """+ride.departure_date.strftime('%y-%m-%d %H:%M')+""" <br>
+        <br>
+        <p> Thank you for using our services. </p>
+ 
+ 
+        </body>
+        </html>
+        """
+        email = EmailSchema(email=[user.login])
+        message = MessageSchema(
+            subject=f"Your ride from {ride.start_city} to {ride.destination_city}",
+            recipients=email.model_dump().get("email"),
+            body=template,
+            subtype=MessageType.html
+            )
         fm = FastMail(EmailUtils.conf)
         await fm.send_message(message)
 
