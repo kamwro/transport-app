@@ -29,7 +29,6 @@ async def reserve_ride(ride_id: int, current_user: Annotated[schemas.User, Depen
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Can't find any ride with id = {ride_id}."
-            # headers={"WWW-Authenticate": "Bearer"},
         )
     if ride.is_active == False:
         raise HTTPException(
