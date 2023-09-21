@@ -171,6 +171,18 @@ def test_read_my_info_not_active(client, test_user):
 
 
 def test_get_all_rides_user_not_active(client, test_user):
+    """Trying:
+        get("/rides/") as inactive user
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+        raises an exception with detail: "Inactive user"
+
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get("/rides/", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
@@ -178,13 +190,37 @@ def test_get_all_rides_user_not_active(client, test_user):
 
 
 def test_get_all_rides_by_starting_city_user_not_active(client, test_user):
+    """Trying:
+        get("/rides/city_1/") as inactive user
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+        raises an exception with detail: "Inactive user"
+
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get("/rides/city_1/", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
     assert response.json() == {'detail':'Inactive user'}
 
 
-def test_get_all_rides_by_destination_city_not_an_adm(client, test_user):
+def test_get_all_rides_by_destination_city_not_active(client, test_user):
+    """Trying:
+        get("/rides/all/city_1/") as inactive user
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+        raises an exception with detail: "Inactive user"
+
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get("/rides/all/city_1/", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
@@ -192,6 +228,18 @@ def test_get_all_rides_by_destination_city_not_an_adm(client, test_user):
 
 
 def test_get_all_rides_from_one_city_to_another_user_not_active(client, test_user):
+    """Trying:
+        get("/rides/city_1/city_2") as inactive user
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+        raises an exception with detail: "Inactive user"
+
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get("/rides/city_1/city_2", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
@@ -199,6 +247,18 @@ def test_get_all_rides_from_one_city_to_another_user_not_active(client, test_use
 
 
 def test_reserve_ride_user_not_active(client, test_user):
+    """Trying:
+        post("/rides/1/reserve") as inactive user
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+        raises an exception with detail: "Inactive user"
+
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.post("/rides/1/reserve", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
@@ -206,6 +266,18 @@ def test_reserve_ride_user_not_active(client, test_user):
 
 
 def test_send_activation_code(client, test_user):
+    """Trying:
+        get("/users/me/send-activation-code")
+
+    Expecting: 
+        status code: 200 (OK)
+        
+        response with message:: "activation code has been sent to <username>"
+
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get("/users/me/send-activation-code", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
@@ -213,11 +285,32 @@ def test_send_activation_code(client, test_user):
 
 
 def test_send_activation_code_not_logged_in(client):
+    """Trying:
+        get("/users/me/send-activation-code") while not logged in
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+    Args:
+        client (Generator): yields test client
+    """
     response = client.get("/users/me/send-activation-code")
     assert response.status_code == 401
 
 
 def test_activate_my_account_incorrect_code(client, test_user):
+    """Trying:
+        get("/users/1/activate/fake-code") with incorrect code
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+
+        raises an exception with detail: "Incorrect activation code."
+        
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get(f"/users/1/activate/fake-code",
                           headers={"Authorization": f"Bearer {token}"})
@@ -225,6 +318,7 @@ def test_activate_my_account_incorrect_code(client, test_user):
     assert response.json() == {"detail": "Incorrect activation code."}
 
 
+#instead of test_activate_my_account
 def test_activate_user(client, test_admin, test_user):
     token = test_login(client, test_admin)
     response = client.patch(f"/users/{test_user['username']}/activate", headers={"Authorization": f"Bearer {token}"})
