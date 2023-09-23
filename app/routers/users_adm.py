@@ -70,13 +70,7 @@ async def remove_adm(username: str, current_user: Annotated[schemas.User, Depend
     """
     user = crud.get_user_by_login(db=db, user_login=username)
     if user is not None:
-        if user.is_admin == False:
-            raise HTTPException(
-            status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
-            detail="User not an admin"
-            )
-        else:
-            return crud.remove_admin_status(db=db, user_login=username)
+        return crud.remove_admin_status(db=db, user_login=username)
     else:
         raise HTTPException(
         status_code=status.HTTP_405_METHOD_NOT_ALLOWED,

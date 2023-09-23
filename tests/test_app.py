@@ -342,6 +342,18 @@ def test_activate_user(client, test_admin, test_user):
 
 
 def test_send_activation_code_already_active(client, test_user):
+    """Trying:
+        get("/users/me/send-activation-code") with already active account
+
+    Expecting: 
+        status code: 405 (Method Not Allowed)
+
+        response with detail: "User already active"
+        
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get("/users/me/send-activation-code", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 405
@@ -349,6 +361,18 @@ def test_send_activation_code_already_active(client, test_user):
 
 
 def test_read_my_info(client, test_user):
+    """Trying:
+        get("/users/me/")
+
+    Expecting: 
+        status code: 200 (OK)
+
+        response with login = username
+        
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get("/users/me/", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
@@ -356,12 +380,34 @@ def test_read_my_info(client, test_user):
 
 
 def test_view_user_info_not_an_admin(client, test_user):
+    """Trying:
+        get("/users/<test user username>") as a not superuser
+
+    Expecting: 
+        status code: 401 (Not Authorized)
+        
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.get(f"/users/{test_user['username']}", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401
 
 
 def test_view_user_info(client, test_admin):
+    """Trying:
+        get("/users/<test user username>") as an admin
+
+    Expecting: 
+        status code: 200 (OK)
+
+        reponse with login = test user username
+        
+    Args:
+        client (Generator): yields test client
+        test_admin (schema.CreateUser): admin credentials
+    """
     token = test_login(client, test_admin)
     response = client.get(f"/users/{test_admin['username']}", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200
@@ -369,6 +415,18 @@ def test_view_user_info(client, test_admin):
 
 
 def test_view_user_info_no_user(client, test_admin):
+    """Trying:
+        get("/users/<fake login>") as an admin but there is not user
+
+    Expecting: 
+        status code: 405 (Method Not Allowed)
+
+        reponse with detail: "There's no user with email = totally-fake-login"
+        
+    Args:
+        client (Generator): yields test client
+        test_admin (schema.CreateUser): admin credentials
+    """
     token = test_login(client, test_admin)
     response = client.get("/users/totally-fake-login", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 405
@@ -376,12 +434,34 @@ def test_view_user_info_no_user(client, test_admin):
 
 
 def test_remove_adm_not_an_admin(client, test_user):
+    """Trying:
+        patch("/users/<test user username>/remove-adm") as a not superuser
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_user)
     response = client.patch(f"/users/{test_user['username']}/remove-adm", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 401 
 
 
 def test_remove_adm_no_user(client, test_admin):
+    """Trying:
+        patch("/users/<test user username>/remove-adm") as an admin but no user found
+
+    Expecting: 
+        status code: 405 (Method Not Allowed)
+
+        reponse with detail: "There's no user with email = totally-fake-login"
+        
+    Args:
+        client (Generator): yields test client
+        test_admin (schema.CreateUser): admin credentials
+    """
     token = test_login(client, test_admin)
     response = client.patch(f"/users/totally-fake-login/remove-adm", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 405
@@ -389,17 +469,20 @@ def test_remove_adm_no_user(client, test_admin):
 
 
 def test_remove_adm_user_not_an_admin(client, test_admin, test_user):
+    """Trying:
+        patch("/users/<test user username>/remove-adm") as a not superuser
+
+    Expecting: 
+        status code: 401 (Unauthorized)
+        
+    Args:
+        client (Generator): yields test client
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_admin)
     response = client.patch(f"/users/{test_user['username']}/remove-adm", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 405 
     assert response.json() == {"detail": "User not an admin"}
-
-
-def test_grant_adm_no_user(client, test_admin):
-    token = test_login(client, test_admin)
-    response = client.patch("/users/totally-fake-login/grant-adm", headers={"Authorization": f"Bearer {token}"})
-    assert response.status_code == 405
-    assert response.json() == {"detail": "There's no user with email = totally-fake-login"}
 
 
 def test_grant_adm_not_an_admin(client, test_user):
