@@ -320,6 +320,21 @@ def test_activate_my_account_incorrect_code(client, test_user):
 
 #instead of test_activate_my_account
 def test_activate_user(client, test_admin, test_user):
+    """Trying:
+        login (see test_login docs)
+
+        patch("/users/<username>/activate") 
+
+    Expecting: 
+        status code: 200
+
+        response with login: test user username
+        
+    Args:
+        client (Generator): yields test client
+        test_admin(schema.CreateUser): admin credentials
+        test_user (schema.CreateUser): user credentials
+    """
     token = test_login(client, test_admin)
     response = client.patch(f"/users/{test_user['username']}/activate", headers={"Authorization": f"Bearer {token}"})
     assert response.status_code == 200

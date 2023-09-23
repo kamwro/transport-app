@@ -1,4 +1,3 @@
-from typing import List
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
@@ -122,4 +121,4 @@ class EmailSchema(BaseModel):
     Args:
         BaseModel (EmailStr | str)
     """   
-    email: List[EmailStr | str]
+    email: list[EmailStr | str]
